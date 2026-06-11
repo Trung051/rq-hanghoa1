@@ -179,13 +179,13 @@ body { min-height: 100vh; }
   border-radius: 18px;
   box-shadow: var(--shadow);
   padding: 16px;
-  border: 1px solid transparent;
+  border: 1px solid var(--line);
 }
 
-.kpi-card-primary { border-color: #bfdbfe; background: linear-gradient(180deg, #ffffff, #eff6ff); }
-.kpi-card-success { border-color: #bbf7d0; background: linear-gradient(180deg, #ffffff, #f0fdf4); }
-.kpi-card-warning { border-color: #fde68a; background: linear-gradient(180deg, #ffffff, #fffbeb); }
-.kpi-card-danger { border-color: #fecaca; background: linear-gradient(180deg, #ffffff, #fef2f2); }
+.kpi-card-primary,
+.kpi-card-success,
+.kpi-card-warning,
+.kpi-card-danger { border-color: var(--line); background: #fff; }
 
 .kpi-label {
   margin: 0 0 8px;
