@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - 102 Check Giá</title>
+<style>
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --primary: #0f172a;
+  --primary-2: #2563eb;
+  --primary-soft: #eff6ff;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+body { min-height: 100vh; }
+
+.app-shell {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 12px 12px 28px;
+}
+
+.hero-card,
+.detail-card,
+.empty-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero-card,
+.detail-card {
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.hero-header h1,
+.detail-header h2,
+.empty-card h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.hero-header h1 { font-size: 22px; }
+.detail-header h2 { font-size: 18px; }
+.empty-card h3 { font-size: 17px; }
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--primary-2);
+}
+
+.subtext,
+.helper-text,
+.empty-card p {
+  color: var(--muted);
+}
+
+.subtext {
+  margin: 6px 0 0;
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.helper-text {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.back-link {
+  color: var(--primary-2);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.primary-btn,
+.secondary-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: #fff;
+}
+
+.secondary-btn {
+  background: #e2e8f0;
+  color: var(--text);
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.filter-row .select-input {
+  width: auto;
+  min-width: 200px;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.select-input,
+.text-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.select-input:focus,
+.text-input:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.kpi-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  border: 1px solid transparent;
+}
+
+.kpi-card-primary { border-color: #bfdbfe; background: linear-gradient(180deg, #ffffff, #eff6ff); }
+.kpi-card-success { border-color: #bbf7d0; background: linear-gradient(180deg, #ffffff, #f0fdf4); }
+.kpi-card-warning { border-color: #fde68a; background: linear-gradient(180deg, #ffffff, #fffbeb); }
+.kpi-card-danger { border-color: #fecaca; background: linear-gradient(180deg, #ffffff, #fef2f2); }
+
+.kpi-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.kpi-value {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.kpi-note {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.success-text { color: var(--success); }
+.error-text { color: var(--danger); }
+.warning-text { color: var(--warning); }
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.history-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px 10px;
+  border-bottom: 1px solid #eef2f7;
+  text-align: left;
+}
+
+.history-table th {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.history-table tr:hover td { background: #f8fafc; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-blue { background: var(--primary-soft); color: var(--primary-2); }
+.badge-yellow { background: #fffbeb; color: #b45309; }
+.badge-green { background: #f0fdf4; color: var(--success); }
+.badge-red { background: #fef2f2; color: var(--danger); }
+.badge-gray { background: #f1f5f9; color: var(--muted); }
+
+.empty-card {
+  padding: 22px 16px;
+  text-align: center;
+}
+
+.hidden { display: none !important; }
+
+.toggle-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--primary-2);
+  transition: all .2s;
+}
+.toggle-more-btn:hover { background: var(--primary-soft); }
+
+.more-stats-wrap {
+  margin-top: 12px;
+  overflow: hidden;
+  animation: fadeSlideDown .3s ease;
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+  html, body { font-size: 15px; }
+  .app-shell { padding: 20px 18px 40px; }
+  .hero-card, .detail-card { padding: 20px; }
+  .hero-header h1 { font-size: 24px; }
+  .filter-grid { grid-template-columns: 1.2fr 1fr 1fr auto; align-items: end; }
+  .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .kpi-value { font-size: 34px; }
+}
+</style>
+</head>
+<body>
+<main class="app-shell">
+  <div class="top-actions">
+    <a class="back-link" href="/" target="_top">← Quay lại trang chính</a>
+    <button id="refreshBtn" class="secondary-btn" type="button">Làm mới</button>
+  </div>
+
+  <section class="hero-card">
+    <div class="hero-header">
+      <p class="eyebrow">102 Check Giá</p>
+      <h1>Dashboard lịch sử phiếu</h1>
+      <p class="subtext">Hiển thị realtime các thông số cơ bản từ sheet Lịch sử phiếu.</p>
+    </div>
+
+    <div class="filter-row">
+      <label for="rangeSelect" class="field-label">Thời gian</label>
+      <select id="rangeSelect" class="select-input">
+        <option value="today">Hôm nay</option>
+        <option value="yesterday">Hôm qua</option>
+        <option value="3days">3 ngày</option>
+        <option value="7days">7 ngày</option>
+        <option value="30days">1 tháng</option>
+        <option value="all">Tất cả</option>
+      </select>
+    </div>
+    <div id="dashboardState" class="helper-text" style="margin-top:12px">Đang tải dashboard...</div>
+  </section>
+
+  <section class="kpi-grid" style="margin-bottom:12px">
+    <div class="kpi-card kpi-card-primary">
+      <p class="kpi-label">Tổng phiếu</p>
+      <div id="kpiTotal" class="kpi-value">0</div>
+      <div id="kpiTotalNote" class="kpi-note">Thu: 0 · Sửa: 0</div>
+    </div>
+    <div class="kpi-card kpi-card-success">
+      <p class="kpi-label">Đã phản hồi</p>
+      <div id="kpiPriced" class="kpi-value success-text">0</div>
+      <div id="kpiPricedNote" class="kpi-note">0% tổng phiếu</div>
+    </div>
+    <div class="kpi-card kpi-card-warning">
+      <p class="kpi-label">Chưa có giá</p>
+      <div id="kpiPending" class="kpi-value warning-text">0</div>
+      <div id="kpiPendingNote" class="kpi-note">Đang chờ phản hồi</div>
+    </div>
+    <div class="kpi-card kpi-card-danger">
+      <p class="kpi-label">Quá hạn</p>
+      <div id="kpiOverdue" class="kpi-value error-text">0</div>
+      <div id="kpiOverdueNote" class="kpi-note">Quá 10 phút: 0 · Quá 30 phút: 0</div>
+    </div>
+  </section>
+
+  <section style="margin-bottom:12px">
+    <button id="toggleMoreBtn" class="toggle-more-btn" type="button">
+      <span id="toggleMoreIcon">▶</span><span id="toggleMoreText">Xem thêm</span>
+    </button>
+    <div id="moreStatsWrap" class="more-stats-wrap hidden">
+      <div class="kpi-grid" style="--cols:3">
+        <div class="kpi-card">
+          <p class="kpi-label">Hôm nay</p>
+          <div id="kpiToday" class="kpi-value">0</div>
+          <div class="kpi-note">Số phiếu hôm nay</div>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">7 ngày</p>
+          <div id="kpiWeek" class="kpi-value">0</div>
+          <div class="kpi-note">Số phiếu 7 ngày qua</div>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">1 tháng</p>
+          <div id="kpiMonth" class="kpi-value">0</div>
+          <div id="kpiUpdatedAt" class="kpi-note">-</div>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">TB thời gian có giá</p>
+          <div id="kpiAvgResponseTime" class="kpi-value">0p</div>
+          <div class="kpi-note">Từ lúc tạo phiếu đến lúc điền giá</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-card">
+    <div class="detail-header" style="margin-bottom:12px">
+      <div>
+        <p class="eyebrow">Danh sách</p>
+        <h2>Lịch sử phiếu gần đây</h2>
+        <p class="subtext">Các phiếu mới nhất trong khoảng thời gian đang lọc.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>Loại</th>
+            <th>Máy</th>
+            <th>Dung lượng</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Thời gian chờ</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="7" class="helper-text">Đang tải dữ liệu...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+window.APP_CONFIG = window.APP_CONFIG || {
+  API_BASE_URL: 'https://script.google.com/macros/s/AKfycbydAa3Bx4w-nRCutklIZXmCv2676-ChpbK9vigpCZEPnNz0Umfj8NI5BigeezKL5IsB/exec'
+};
+
+const API_BASE = window.APP_CONFIG.API_BASE_URL || '';
+const els = {};
+
+window.addEventListener('DOMContentLoaded', () => {
+  cacheElements();
+  bindEvents();
+  loadDashboard();
+  setInterval(loadDashboard, 30000);
+});
+
+function cacheElements() {
+  els.rangeSelect = document.getElementById('rangeSelect');
+  els.refreshBtn = document.getElementById('refreshBtn');
+  els.dashboardState = document.getElementById('dashboardState');
+  els.historyBody = document.getElementById('historyBody');
+  els.toggleMoreBtn = document.getElementById('toggleMoreBtn');
+  els.toggleMoreIcon = document.getElementById('toggleMoreIcon');
+  els.moreStatsWrap = document.getElementById('moreStatsWrap');
+}
+
+function bindEvents() {
+  els.rangeSelect.addEventListener('change', () => loadDashboard());
+  els.refreshBtn.addEventListener('click', () => loadDashboard());
+  els.toggleMoreBtn.addEventListener('click', toggleMoreStats);
+}
+
+function toggleMoreStats() {
+  const expanded = els.moreStatsWrap.classList.toggle('hidden');
+  els.toggleMoreIcon.textContent = expanded ? '▶' : '▼';
+  els.toggleMoreBtn.querySelector('span:last-child').textContent = expanded ? 'Xem thêm' : 'Thu gọn';
+}
+
+function getRangeStartMs(range) {
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  switch (range) {
+    case 'yesterday': return todayStart.getTime() - 86400000;
+    case '3days': return todayStart.getTime() - 2 * 86400000;
+    case '7days': return todayStart.getTime() - 6 * 86400000;
+    case '30days': return todayStart.getTime() - 29 * 86400000;
+    case 'all': return 0;
+    default: return todayStart.getTime();
+  }
+}
+
+async function loadDashboard() {
+  setState('Đang tải dashboard...');
+  const range = els.rangeSelect.value || 'today';
+  const rangeStart = getRangeStartMs(range);
+  try {
+    const [stats, history] = await Promise.all([
+      apiCall('dashboardStats'),
+      apiCall('dashboardHistory', { limit: 100 })
+    ]);
+    renderStats(stats || {});
+    const filtered = filterByRange(history, rangeStart);
+    renderHistory(filtered);
+    setState('Đã cập nhật lúc ' + new Date().toLocaleString('vi-VN'));
+  } catch (err) {
+    setState('Lỗi tải dữ liệu: ' + err.message, true);
+    els.historyBody.innerHTML = '<tr><td colspan="7" class="error-text">Không tải được lịch sử phiếu.</td></tr>';
+  }
+}
+
+function filterByRange(items, rangeStart) {
+  if (!rangeStart) return items;
+  return items.filter(item => {
+    const ts = item.timestamp ? new Date(item.timestamp).getTime() : 0;
+    return ts >= rangeStart;
+  });
+}
+
+function apiCall(action, params) {
+  const query = new URLSearchParams(Object.assign({ action }, params || {})).toString();
+  const base = API_BASE || window.location.href.split('?')[0];
+  return fetch(base + '?' + query).then((res) => {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }).then((data) => {
+    if (data && data.error) throw new Error(data.error);
+    return data;
+  });
+}
+
+function renderStats(d) {
+  const total = Number(d.total || d.totalRequests || 0);
+  const buyback = Number(d.buyback || d.buybackRequests || 0);
+  const repair = Number(d.repair || d.repairRequests || 0);
+  const priced = Number(d.priced || d.pricedRequests || 0);
+  const pending = Number(d.pending || d.pendingRequests || 0);
+  const overdue10 = Number(d.overdue10 || d.overdue10m || 0);
+  const overdue30 = Number(d.overdue30 || d.overdue30m || 0);
+  const responseRate = total ? Math.round((priced / total) * 100) : Number(d.responseRate || 0);
+
+  setText('kpiTotal', fmtNum(total));
+  setText('kpiTotalNote', 'Thu: ' + fmtNum(buyback) + ' · Sửa: ' + fmtNum(repair));
+  setText('kpiPriced', fmtNum(priced));
+  setText('kpiPricedNote', fmtNum(responseRate) + '% tổng phiếu');
+  setText('kpiPending', fmtNum(pending));
+  setText('kpiPendingNote', pending ? 'Đang chờ phản hồi' : 'Không có phiếu chờ');
+  setText('kpiOverdue', fmtNum(overdue10));
+  setText('kpiOverdueNote', 'Quá 10 phút: ' + fmtNum(overdue10) + ' · Quá 30 phút: ' + fmtNum(overdue30));
+  setText('kpiToday', fmtNum(Number(d.today || d.todayRequests || 0)));
+  setText('kpiWeek', fmtNum(Number(d.week || d.weekRequests || 0)));
+  setText('kpiMonth', fmtNum(Number(d.month || d.monthRequests || 0)));
+  setText('kpiAvgResponseTime', formatResponseTime(Number(d.avgResponseTimeMin || 0)));
+  setText('kpiUpdatedAt', d.updatedAt ? 'Cập nhật: ' + d.updatedAt : 'Realtime mỗi 30 giây');
+}
+
+function renderHistory(items) {
+  if (!items.length) {
+    els.historyBody.innerHTML = '<tr><td colspan="7" class="helper-text">Không có phiếu trong khoảng thời gian này.</td></tr>';
+    return;
+  }
+
+  els.historyBody.innerHTML = items.map((item) => {
+    const modeRaw = String(item.mode || '').toLowerCase();
+    const isRepair = modeRaw === 'repair' || item.mode === 'Sửa chữa';
+    const price = Number(item.price || 0);
+    const isPending = item.isPending !== undefined ? item.isPending : price <= 0;
+    const modeText = isRepair ? 'Sửa chữa' : 'Thu máy';
+    const timeText = item.time || item.timeLabel || '';
+    const waitText = item.waitLabel || (isPending ? 'Đang chờ' : 'Đã phản hồi');
+    return `
+      <tr>
+        <td>${escapeHtml(timeText)}</td>
+        <td><span class="badge ${isRepair ? 'badge-yellow' : 'badge-blue'}">${modeText}</span></td>
+        <td>${escapeHtml(item.deviceName || '')}</td>
+        <td>${escapeHtml(item.storage || '-')}</td>
+        <td>${price > 0 ? '<span class="success-text">' + fmtVnd(price) + '</span>' : '-'}</td>
+        <td><span class="badge ${isPending ? 'badge-red' : 'badge-green'}">${isPending ? 'Chưa có giá' : 'Đã có giá'}</span></td>
+        <td><span class="badge ${item.isLate ? 'badge-red' : (isPending ? 'badge-gray' : 'badge-green')}">${escapeHtml(waitText)}</span></td>
+      </tr>`;
+  }).join('');
+}
+
+function setState(text, isError) {
+  els.dashboardState.textContent = text;
+  els.dashboardState.className = 'helper-text ' + (isError ? 'error-text' : '');
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function toDateInput(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+function fmtNum(value) {
+  return Number(value || 0).toLocaleString('vi-VN');
+}
+
+function fmtVnd(value) {
+  return Number(value || 0).toLocaleString('vi-VN') + 'đ';
+}
+
+function formatResponseTime(minutes) {
+  const total = Math.max(0, Math.round(Number(minutes || 0)));
+  if (total <= 0) return '0p';
+  const hours = Math.floor(total / 60);
+  const mins = total % 60;
+  if (hours > 0) return mins ? hours + 'h ' + mins + 'p' : hours + 'h';
+  return total + 'p';
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+}
+</script>
+</body>
+</html>
