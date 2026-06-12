@@ -528,7 +528,7 @@ function renderStats(d) {
   setText('kpiWeek', fmtNum(Number(d.week || d.weekRequests || 0)));
   setText('kpiMonth', fmtNum(Number(d.month || d.monthRequests || 0)));
   setText('kpiAvgResponseTime', formatResponseTime(Number(d.avgResponseTimeMin || 0)));
-  setText('kpiUpdatedAt', d.updatedAt ? 'Cập nhật: ' + d.updatedAt : 'Realtime mỗi 30 giây');
+  setText('kpiUpdatedAt', d.updatedAt ? 'Cập nhật: ' + d.updatedAt : 'Số phiếu 30 ngày qua');
 }
 
 function renderHistory(items) {
