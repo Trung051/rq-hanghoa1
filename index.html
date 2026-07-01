@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - 102 Check Giá</title>
+<title>Dashboard Phiếu Yêu Cầu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f5f7fb;
@@ -20,257 +20,140 @@
   --danger: #dc2626;
   --success: #16a34a;
   --warning: #f59e0b;
-  --shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
-  --radius: 18px;
+  --orange: #ea580c;
+  --shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 32px rgba(15, 23, 42, 0.12);
+  --radius: 14px;
+  --radius-sm: 10px;
 }
-
 * { box-sizing: border-box; }
 html, body {
-  margin: 0;
-  padding: 0;
-  font-family: Inter, Arial, sans-serif;
+  margin: 0; padding: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--text);
   font-size: 14px;
 }
 body { min-height: 100vh; }
 
-.app-shell {
-  width: 100%;
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 12px 12px 28px;
-}
+.hidden { display: none !important; }
 
-.hero-card,
-.detail-card,
-.empty-card,
-.spinner-card,
-.modal-content {
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.auth-card {
+  width: min(420px, 100%);
   background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
 }
-
-.hero-card,
-.detail-card {
-  padding: 14px;
-  margin-bottom: 12px;
-}
-
-.hero-header h1,
-.detail-header h2,
-.empty-card h3,
-.modal-header h3 {
-  margin: 0;
-  line-height: 1.2;
-}
-
-.hero-header h1 { font-size: 22px; }
-.detail-header h2 { font-size: 18px; }
-.empty-card h3,
-.modal-header h3 { font-size: 17px; }
-
-.eyebrow {
-  margin: 0 0 6px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--primary-2);
-}
-
-.subtext,
-.helper-text,
-.price-breakdown,
-.empty-card p {
-  color: var(--muted);
-}
-
-.subtext {
-  margin: 6px 0 0;
-  line-height: 1.45;
+.auth-title { margin: 0 0 6px; font-size: 28px; font-weight: 800; }
+.auth-subtitle { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+.auth-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: var(--danger);
   font-size: 13px;
 }
-
-.helper-text {
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-.top-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.back-link {
-  color: var(--primary-2);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.primary-btn,
-.secondary-btn {
-  border: none;
-  border-radius: 12px;
-  padding: 11px 14px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.primary-btn {
-  background: var(--primary);
-  color: #fff;
-}
-
-.secondary-btn {
-  background: #e2e8f0;
-  color: var(--text);
-}
-
-.filter-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.filter-row .select-input {
-  width: auto;
-  min-width: 200px;
-}
-
-.field-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.select-input,
-.text-input {
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+.auth-label { font-size: 12px; font-weight: 700; color: #334155; }
+.auth-input {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 12px 14px;
   font-size: 14px;
   outline: none;
   background: #fff;
-  color: var(--text);
-  transition: border-color .2s ease, box-shadow .2s ease;
 }
-
-.select-input:focus,
-.text-input:focus {
+.auth-input:focus {
   border-color: #93c5fd;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+.auth-submit {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.auth-submit:disabled { opacity: .7; cursor: not-allowed; }
+
+.app-shell {
+  width: 100%;
+  max-width: min(1400px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 12px 12px 28px;
 }
 
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-}
-
-.kpi-card {
-  background: #fff;
-  border-radius: 18px;
+/* ── Header ── */
+.hero-card {
+  background: var(--card);
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 16px;
-  border: 1px solid var(--line);
+  margin-bottom: 12px;
 }
-
-.kpi-card-primary,
-.kpi-card-success,
-.kpi-card-warning,
-.kpi-card-danger { border-color: var(--line); background: #fff; }
-
-.kpi-label {
-  margin: 0 0 8px;
-  font-size: 11px;
+.hero-header h1 { margin: 0; font-size: 22px; line-height: 1.2; }
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: .06em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--primary-2);
 }
-
-.kpi-value {
-  font-size: 34px;
-  font-weight: 900;
-  line-height: 1.05;
+.subtext { color: var(--muted); font-size: 13px; margin: 4px 0 0; line-height: 1.4; }
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
 }
-
-.kpi-note {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.success-text { color: var(--success); }
-.error-text { color: var(--danger); }
-.warning-text { color: var(--warning); }
-
-.table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.history-table {
-  width: 100%;
-  min-width: 720px;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.history-table th,
-.history-table td {
-  padding: 10px 10px;
-  border-bottom: 1px solid #eef2f7;
-  text-align: left;
-}
-
-.history-table th {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-
-.history-table tr:hover td { background: #f8fafc; }
-
-.badge {
-  display: inline-flex;
+.hero-actions {
+  display: flex;
   align-items: center;
-  border-radius: 999px;
-  padding: 5px 9px;
+  gap: 8px;
+}
+.user-chip {
   font-size: 12px;
-  font-weight: 700;
+  color: var(--muted);
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 12px;
   white-space: nowrap;
 }
 
-.badge-blue { background: var(--primary-soft); color: var(--primary-2); }
-.badge-yellow { background: #fffbeb; color: #b45309; }
-.badge-green { background: #f0fdf4; color: var(--success); }
-.badge-red { background: #fef2f2; color: var(--danger); }
-.badge-gray { background: #f1f5f9; color: var(--muted); }
-
-.empty-card {
-  padding: 22px 16px;
-  text-align: center;
+/* ── Tabs ── */
+.tabs-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px 8px 6px 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
 }
-
-.hidden { display: none !important; }
-
-.toggle-more-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.tabs-wrap::-webkit-scrollbar { height: 6px; }
+.tabs-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+.tabs-wrap::-webkit-scrollbar-track { background: transparent; }
+.tab-btn {
+  flex-shrink: 0;
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 999px;
@@ -278,220 +161,1522 @@ body { min-height: 100vh; }
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  color: var(--primary-2);
+  color: var(--muted);
   transition: all .2s;
+  white-space: nowrap;
 }
-.toggle-more-btn:hover { background: var(--primary-soft); }
+.tab-btn:hover { background: #f8fafc; color: var(--text); }
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.tab-count {
+  display: inline-block;
+  background: rgba(255,255,255,.2);
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+  margin-left: 4px;
+}
+.tab-btn:not(.active) .tab-count {
+  background: #f1f5f9;
+  color: var(--muted);
+}
 
-.more-stats-wrap {
-  margin-top: 12px;
+/* ── Search ── */
+.search-wrap {
+  position: relative;
+  margin: 12px 0;
+}
+.search-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 13px 14px 13px 40px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-input:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  margin-top: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+.search-dropdown.show { display: block; }
+.suggest-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background .15s;
+}
+.suggest-item:last-child { border-bottom: none; }
+.suggest-item:hover { background: #f8fafc; }
+.suggest-ma { font-weight: 700; font-size: 13px; }
+.suggest-ten { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.suggest-right { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+.suggest-sheet { font-size: 11px; color: var(--primary-2); font-weight: 600; }
+.suggest-empty { padding: 14px; text-align: center; color: var(--muted); font-size: 13px; }
+
+/* ── Filter row ── */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.filter-input {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  transition: border-color .2s;
+}
+.filter-input:focus { border-color: #93c5fd; }
+.filter-select {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+}
+.filter-select:focus { border-color: #93c5fd; }
+.status-filter-wrap { position: relative; }
+.status-filter-btn {
+  min-width: 170px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.status-filter-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+  min-width: 220px;
+  max-height: 260px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+}
+.status-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.status-filter-item:hover { background: #f8fafc; }
+.status-filter-item input { margin: 0; }
+
+/* ── KPI Row ── */
+.kpi-panel {
+  margin-bottom: 12px;
+}
+.kpi-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  box-shadow: var(--shadow);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  cursor: pointer;
+}
+.kpi-toggle span:last-child { color: var(--muted); }
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.kpi-card {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  border: 1px solid var(--line);
+}
+.kpi-label {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.kpi-value { font-size: 28px; font-weight: 900; line-height: 1.05; }
+
+/* ── Ticket cards ── */
+.tickets-wrap { display: flex; flex-direction: column; gap: 8px; }
+.ticket-card {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all .18s;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.ticket-card.overdue-unprocessed {
+  border: 2px solid var(--danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, .12), var(--shadow);
+}
+.ticket-card.overdue-unprocessed:hover {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, .18), var(--shadow-lg);
+}
+.ticket-left { min-width: 0; }
+.ticket-ma { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.ticket-ten { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ticket-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.ticket-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-blue { background: var(--primary-soft); color: var(--primary-2); }
+.badge-green { background: #f0fdf4; color: var(--success); }
+.badge-yellow { background: #fffbeb; color: #b45309; }
+.badge-red { background: #fef2f2; color: var(--danger); }
+.badge-orange { background: #fff7ed; color: var(--orange); }
+.badge-gray { background: #f1f5f9; color: var(--muted); }
+
+/* ── Empty / Loading ── */
+.empty-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 16px;
+  text-align: center;
+}
+.empty-card h3 { margin: 0 0 6px; font-size: 16px; }
+.empty-card p { margin: 0; color: var(--muted); font-size: 13px; }
+.spinner {
+  display: none;
+  width: 28px; height: 28px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--primary-2);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+.loading-progress-wrap {
+  width: min(420px, 86%);
+  height: 10px;
+  margin: 18px auto 0;
+  background: #e2e8f0;
+  border-radius: 999px;
   overflow: hidden;
-  animation: fadeSlideDown .3s ease;
+}
+.loading-progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  transition: width .25s ease;
+}
+.loading-progress-text {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hidden { display: none !important; }
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 540px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 0;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+}
+.receive-full .modal-box {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  height: 100%;
+  border-radius: 0;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+.receive-full .modal-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px;
+}
+.receive-full .receive-search-section {
+  flex-shrink: 0;
+  overflow: visible;
+  position: relative;
+  z-index: 5;
+  margin-bottom: 8px;
+}
+.receive-full .receive-search-section .ycsc-search-wrap {
+  margin-bottom: 0;
+}
+.receive-full .receive-search-section .ycsc-search-dropdown {
+  position: static;
+  margin-top: 6px;
+  max-height: min(220px, 40vh);
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.receive-full .receive-content-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+#muaLKModal:not(.receive-full) .modal-body {
+  overflow-y: auto;
+  max-height: calc(90vh - 60px);
+}
+@media (min-width: 768px) {
+  .receive-full .modal-box {
+    max-width: 640px !important;
+    max-height: 95vh !important;
+    height: auto;
+    border-radius: 20px;
+  }
+  .receive-full .modal-body {
+    max-height: calc(95vh - 60px);
+  }
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+.modal-header h2 { margin: 0; font-size: 18px; }
+.modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.modal-title-wrap h2 { min-width: 0; }
+.modal-sheet-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-2);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.modal-sheet-badge.hidden { display: none; }
+.modal-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-title-actions .badge { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.modal-close {
+  width: 32px; height: 32px;
+  border: none; background: #f1f5f9;
+  border-radius: 50%; font-size: 18px;
+  cursor: pointer; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.modal-close:hover { background: #e2e8f0; }
+.modal-body { padding: 16px; }
+.modal-section { margin-bottom: 16px; }
+.modal-section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+.modal-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 12px;
+}
+.modal-field:last-child { border-bottom: none; }
+.modal-field-label { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.modal-field-value { font-size: 13px; font-weight: 500; text-align: right; word-break: break-word; }
+
+/* ── Edit fields ── */
+.edit-group { margin-bottom: 12px; }
+.edit-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.edit-input, .edit-textarea, .edit-select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  transition: border-color .2s;
+}
+.edit-input:focus, .edit-textarea:focus, .edit-select:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+}
+.edit-textarea { resize: vertical; min-height: 60px; }
+
+.save-btn {
+  width: 100%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity .15s;
+  margin-top: 8px;
+}
+.save-btn:disabled { opacity: .5; cursor: not-allowed; }
+.save-btn:not(:disabled):hover { opacity: .9; }
+
+.support-request-btn {
+  width: 100%;
+  border: 1px solid #bfdbfe;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  color: #1d4ed8;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .18s ease;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, .08);
+}
+.support-request-btn:hover {
+  border-color: #60a5fa;
+  background: #eff6ff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, .14);
+}
+.support-request-btn:active { transform: translateY(0); }
+
+.support-modal-content {
+  background: #fff;
+  border-radius: 22px;
+  width: min(620px, calc(100vw - 28px));
+  max-height: 88vh;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
+  display: flex;
+  flex-direction: column;
+}
+.support-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+.support-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+}
+.support-modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all .16s ease;
+}
+.support-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.support-modal-body {
+  padding: 22px;
+  overflow-y: auto;
+}
+.support-form-grid {
+  display: grid;
+  gap: 14px;
+}
+.support-field {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.support-field label {
+  color: #334155;
+  font-weight: 800;
+  line-height: 1.25;
+  padding-top: 10px;
+}
+.support-input,
+.support-select,
+.support-textarea {
+  width: 100%;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #0f172a;
+  background: #fff;
+  outline: none;
+  transition: all .16s ease;
+}
+.support-textarea { min-height: 96px; resize: vertical; }
+.support-input:focus,
+.support-select:focus,
+.support-textarea:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, .10);
+}
+.support-submit-btn {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #fff;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 900;
+  border-radius: 13px;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, .18);
+  transition: all .16s ease;
+}
+.support-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, .22);
+}
+@media (max-width: 560px) {
+  .support-field { grid-template-columns: 1fr; gap: 6px; }
+  .support-field label { padding-top: 0; }
+}
+.support-chat-box {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 14px;
+}
+.support-chat-toggle {
+  width: 100%;
+  border: 1px solid #dbe3ef;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.support-chat-toggle:hover { background: #f1f5f9; }
+.support-chat-collapse.hidden { display: none; }
+.support-chat-arrow { transition: transform .18s ease; }
+.support-chat-toggle.open .support-chat-arrow { transform: rotate(180deg); }
+.support-chat-message {
+  max-width: 86%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  border: 1px solid #e2e8f0;
+}
+.support-chat-message.request {
+  justify-self: start;
+  background: #f8fafc;
+  color: #0f172a;
+  border-top-left-radius: 4px;
+}
+.support-chat-message.reply {
+  justify-self: end;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-color: #bfdbfe;
+  border-top-right-radius: 4px;
+}
+.support-chat-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  color: #64748b;
+  margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
-@keyframes fadeSlideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 2000;
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+  box-shadow: var(--shadow-lg);
 }
+.toast.show { transform: translateX(-50%) translateY(0); }
 
+/* ── Responsive ── */
 @media (min-width: 768px) {
   html, body { font-size: 15px; }
   .app-shell { padding: 20px 18px 40px; }
-  .hero-card, .detail-card { padding: 20px; }
+  .hero-card { padding: 20px; }
   .hero-header h1 { font-size: 24px; }
-  .filter-row {
-    align-items: end;
-  }
-  .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-  .kpi-value { font-size: 34px; }
+  .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .kpi-value { font-size: 32px; }
+  .modal-overlay { align-items: center; }
+  .modal-box { border-radius: 20px; max-height: 80vh; }
 }
+
+/* Chat Bubble */
+.chat-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: all .2s;
+}
+.chat-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(37,99,235,0.4); }
+
+.chat-modal-content {
+  background: #fff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.chat-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.chat-modal-header h3 { margin: 0; font-size: 18px; }
+.chat-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 32px;
+  color: #64748b;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+.chat-close-btn:hover { color: #0f172a; }
+.chat-modal-body { padding: 20px; overflow-y: auto; }
+
+.chat-search-results {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-top: 8px;
+  display: none;
+}
+.chat-search-results:not(:empty) { display: block; }
+.chat-search-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+.chat-search-item:last-child { border-bottom: none; }
+.chat-search-item:hover { background: #f8fafc; }
+
+.chat-selected-tickets { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.chat-ticket-box {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+}
+.chat-ticket-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-ticket-info { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+
+/* ── Pager ── */
+.pager-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin: 16px 0 8px;
+}
+.pager-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.pager-btn:hover {
+  background: #f8fafc;
+  border-color: #93c5fd;
+}
+.pager-btn.active {
+  background: var(--primary-2);
+  color: #fff;
+  border-color: var(--primary-2);
+}
+
+/* ── Assigned complete button ── */
+.assigned-complete-btn {
+  margin-top: 6px;
+  padding: 5px 12px;
+  border: 1px solid #16a34a;
+  background: #f0fdf4;
+  color: #16a34a;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.assigned-complete-btn:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+/* ── Mua linh kiện ── */
+.buy-parts-actions { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.buy-parts-btn { flex: 1; min-width: 160px; border: none; border-radius: var(--radius-sm); padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.buy-parts-btn-primary { background: var(--primary-2); color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,.25); }
+.buy-parts-btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+.buy-parts-btn-secondary { background: #fff; color: var(--primary-2); border: 2px solid var(--primary-2); }
+.buy-parts-btn-secondary:hover { background: var(--primary-soft); }
+.buy-parts-btn-order { background: #f59e0b; color: #fff; box-shadow: 0 4px 14px rgba(245,158,11,.25); }
+.buy-parts-btn-order:hover { background: #d97706; transform: translateY(-1px); }
+.buy-parts-table-wrap { overflow-x: auto; background: #fff; border-radius: var(--radius-sm); box-shadow: var(--shadow); border: 1px solid var(--line); }
+.buy-parts-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.buy-parts-table th { background: #f8fafc; padding: 10px 12px; text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--line); white-space: nowrap; }
+.buy-parts-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+.buy-parts-table tr:last-child td { border-bottom: none; }
+.buy-parts-table tr:hover td { background: #f8fafc; }
+.buy-parts-status { display: inline-block; border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+.buy-parts-status-cho { background: #fffbeb; color: #b45309; }
+.buy-parts-status-dang { background: #eff6ff; color: #2563eb; }
+.buy-parts-status-nhan { background: #f0fdf4; color: #16a34a; }
+.buy-parts-status-huy { background: #fef2f2; color: #dc2626; }
+.buy-parts-ycsc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.buy-parts-ycsc-tag { background: var(--primary-soft); color: var(--primary-2); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+.buy-parts-ycsc-tag:hover { background: #dbeafe; }
+.buy-parts-empty { padding: 32px; text-align: center; color: var(--muted); }
+.buy-parts-action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #16a34a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+}
+.buy-parts-action-btn:hover {
+  background: #15803d;
+}
+
+/* ── YCSC search in modal ── */
+.ycsc-search-wrap { position: relative; margin-bottom: 8px; }
+.ycsc-search-row { display: flex; gap: 8px; align-items: stretch; }
+.ycsc-search-row .ycsc-search-input { flex: 1; margin-bottom: 0; }
+.ycsc-add-btn {
+  flex-shrink: 0;
+  width: 42px;
+  border: 1px solid var(--success);
+  border-radius: var(--radius-sm);
+  background: #f0fdf4;
+  color: var(--success);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ycsc-add-btn:hover { background: #dcfce7; }
+.send-manual-form {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.send-manual-form.hidden { display: none; }
+.ycsc-search-input { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; font-family: inherit; outline: none; background: #fff; color: var(--text); }
+.ycsc-search-input:focus { border-color: #93c5fd; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+.ycsc-search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); max-height: 220px; overflow-y: auto; z-index: 50; display: none; }
+.ycsc-search-dropdown.show { display: block; }
+.ycsc-search-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; }
+.ycsc-search-item:last-child { border-bottom: none; }
+.ycsc-search-item:hover { background: #f8fafc; }
+.ycsc-search-item input { margin: 0; }
+.ycsc-selected-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ycsc-selected-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-soft); color: var(--primary-2); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 600; }
+.ycsc-selected-tag button { background: none; border: none; color: var(--primary-2); cursor: pointer; font-size: 16px; line-height: 1; padding: 0; }
+.ycsc-selected-tag button:hover { color: var(--danger); }
+
 </style>
 </head>
 <body>
-<main class="app-shell">
-  <div class="top-actions">
-    <a class="back-link" href="/" target="_top">← Quay lại trang chính</a>
-    <button id="refreshBtn" class="secondary-btn" type="button">Làm mới</button>
+<div id="loginScreen" class="auth-shell">
+  <div class="auth-card">
+    <p class="eyebrow">Đăng nhập</p>
+    <h1 class="auth-title">Dashboard Phiếu</h1>
+    <p class="auth-subtitle">Đăng nhập bằng tài khoản trong sheet `admin` để vào dashboard.</p>
+    <div id="loginError" class="auth-error hidden"></div>
+    <form id="loginForm" class="auth-form">
+      <div>
+        <label class="auth-label" for="loginUsername">Tài khoản</label>
+        <input id="loginUsername" class="auth-input" type="text" autocomplete="username" placeholder="Nhập tài khoản">
+      </div>
+      <div>
+        <label class="auth-label" for="loginPassword">Mật khẩu</label>
+        <input id="loginPassword" class="auth-input" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu">
+      </div>
+      <button id="loginSubmitBtn" class="auth-submit" type="submit">Đăng nhập</button>
+    </form>
+  </div>
+</div>
+
+<main id="appShell" class="app-shell hidden">
+
+  <!-- Hero -->
+  <section class="hero-card">
+    <div class="hero-top">
+      <div class="hero-header">
+        <p class="eyebrow">Phiếu Yêu Cầu</p>
+        <h1>Dashboard Quản Lý Phiếu</h1>
+        <p class="subtext">Quản lý phiếu yêu cầu sửa chữa — bảo hành — thu cũ — nhập hàng.</p>
+      </div>
+      <div class="hero-actions">
+        <span id="currentUsername" class="user-chip hidden"></span>
+        <button id="logoutBtn" class="tab-btn" type="button">Đăng xuất</button>
+      </div>
+    </div>
+    <div class="tabs-wrap" id="tabsWrap"></div>
+  </section>
+
+  <!-- Search -->
+  <section class="search-wrap" id="searchWrap">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="searchInput" class="search-input" type="text" placeholder="Tìm mã yêu cầu, tên hàng..." autocomplete="off">
+    <div id="searchDropdown" class="search-dropdown"></div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filter-row" id="filterRow">
+    <span class="filter-label">Lọc:</span>
+    <select id="filterTime" class="filter-select">
+      <option value="today">Hôm nay</option>
+      <option value="yesterday">Hôm qua</option>
+      <option value="7days">7 ngày qua</option>
+      <option value="30days">1 tháng qua</option>
+      <option value="custom">Từ ngày - đến ngày</option>
+      <option value="all" selected>Tất cả</option>
+    </select>
+    <input id="filterDateFrom" class="filter-input hidden" type="date">
+    <input id="filterDateTo" class="filter-input hidden" type="date">
+    <div class="status-filter-wrap" id="statusFilterWrap">
+      <button type="button" id="filterStatusBtn" class="status-filter-btn">Tất cả trạng thái</button>
+      <div id="filterStatusMenu" class="status-filter-menu hidden"></div>
+    </div>
+    <button id="clearFilterBtn" class="tab-btn" style="margin-left:auto;font-size:12px;padding:6px 12px;">Xoá lọc</button>
+    <button id="receiveBtn" class="tab-btn" style="display:none;font-size:12px;padding:6px 14px;background:#fff;border-color:var(--success);color:var(--success);">📦 Nhận hàng</button>
+    <button id="buyPartsQuickBtn" class="tab-btn" style="display:none;font-size:12px;padding:6px 14px;background:#fff;border-color:var(--success);color:var(--success);">🛒 Mua linh kiện</button>
+    <button id="sendBtn" class="tab-btn" style="display:none;font-size:12px;padding:6px 14px;background:#fff;border-color:var(--success);color:var(--success);">📤 Gửi hàng</button>
+  </section>
+
+  <!-- KPI -->
+  <section class="kpi-panel">
+    <button class="kpi-toggle" id="kpiToggle">
+      <span>DASHBOARD</span>
+      <span>▼</span>
+    </button>
+    <div class="kpi-grid hidden" id="kpiGrid"></div>
+  </section>
+
+  <!-- Loading -->
+  <div id="loadingState" class="empty-card">
+    <div class="loading-progress-wrap">
+      <div id="loadingProgressBar" class="loading-progress-bar"></div>
+    </div>
+    <div id="loadingProgressText" class="loading-progress-text">Đang tải dữ liệu... 0%</div>
   </div>
 
-  <section class="hero-card">
-    <div class="hero-header">
-      <p class="eyebrow">102 Check Giá</p>
-      <h1>Dashboard lịch sử phiếu</h1>
-      <p class="subtext">Hiển thị realtime các thông số cơ bản từ sheet Lịch sử phiếu.</p>
-    </div>
+  <!-- Tickets list -->
+  <div id="ticketsWrap" class="tickets-wrap hidden"></div>
 
-    <div class="filter-row">
-      <label for="rangeSelect" class="field-label">Thời gian</label>
-      <select id="rangeSelect" class="select-input">
-        <option value="today">Hôm nay</option>
-        <option value="yesterday">Hôm qua</option>
-        <option value="3days">3 ngày</option>
-        <option value="7days">7 ngày</option>
-        <option value="30days">1 tháng</option>
-        <option value="all">Tất cả</option>
-      </select>
-    </div>
-    <div id="dashboardState" class="helper-text" style="margin-top:12px">Đang tải dashboard...</div>
-  </section>
+  <!-- Empty -->
+  <div id="emptyState" class="empty-card hidden">
+    <h3>Không có phiếu</h3>
+    <p>Không tìm thấy phiếu yêu cầu nào phù hợp.</p>
+  </div>
 
-  <section class="kpi-grid" style="margin-bottom:12px">
-    <div class="kpi-card kpi-card-primary">
-      <p class="kpi-label">Tổng phiếu</p>
-      <div id="kpiTotal" class="kpi-value">0</div>
-      <div id="kpiTotalNote" class="kpi-note">Thu: 0 · Sửa: 0</div>
-    </div>
-    <div class="kpi-card kpi-card-success">
-      <p class="kpi-label">Đã phản hồi</p>
-      <div id="kpiPriced" class="kpi-value success-text">0</div>
-      <div id="kpiPricedNote" class="kpi-note">0% tổng phiếu</div>
-    </div>
-    <div class="kpi-card kpi-card-warning">
-      <p class="kpi-label">Chưa có giá</p>
-      <div id="kpiPending" class="kpi-value warning-text">0</div>
-      <div id="kpiPendingNote" class="kpi-note">Đang chờ phản hồi</div>
-    </div>
-    <div class="kpi-card kpi-card-danger">
-      <p class="kpi-label">Quá hạn</p>
-      <div id="kpiOverdue" class="kpi-value error-text">0</div>
-      <div id="kpiOverdueNote" class="kpi-note">Quá 10 phút: 0 · Quá 30 phút: 0</div>
-    </div>
-  </section>
-
-  <section style="margin-bottom:12px">
-    <button id="toggleMoreBtn" class="toggle-more-btn" type="button">
-      <span id="toggleMoreIcon">▶</span><span id="toggleMoreText">Xem thêm</span>
-    </button>
-    <div id="moreStatsWrap" class="more-stats-wrap hidden">
-      <div class="kpi-grid" style="--cols:3">
-        <div class="kpi-card">
-          <p class="kpi-label">Hôm nay</p>
-          <div id="kpiToday" class="kpi-value">0</div>
-          <div class="kpi-note">Số phiếu hôm nay</div>
-        </div>
-        <div class="kpi-card">
-          <p class="kpi-label">7 ngày</p>
-          <div id="kpiWeek" class="kpi-value">0</div>
-          <div class="kpi-note">Số phiếu 7 ngày qua</div>
-        </div>
-        <div class="kpi-card">
-          <p class="kpi-label">1 tháng</p>
-          <div id="kpiMonth" class="kpi-value">0</div>
-          <div id="kpiUpdatedAt" class="kpi-note">-</div>
-        </div>
-        <div class="kpi-card">
-          <p class="kpi-label">TB thời gian có giá</p>
-          <div id="kpiAvgResponseTime" class="kpi-value">0p</div>
-          <div class="kpi-note">Từ lúc tạo phiếu đến lúc điền giá</div>
-        </div>
+<!-- Mua linh kiện Modal -->
+<div id="muaLKModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:960px;max-height:90vh;">
+    <div class="modal-header">
+      <h2 id="buyPartsModalTitle">Mua linh kiện</h2>
+      <div class="modal-title-actions">
+        <button class="modal-close" id="muaLKModalClose">&times;</button>
       </div>
     </div>
-  </section>
+    <div class="modal-body" id="buyPartsModalBody"></div>
+  </div>
+</div>
 
-  <section class="detail-card">
-    <div class="detail-header" style="margin-bottom:12px">
-      <div>
-        <p class="eyebrow">Danh sách</p>
-        <h2>Lịch sử phiếu gần đây</h2>
-        <p class="subtext">Các phiếu mới nhất trong khoảng thời gian đang lọc.</p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>Thời gian</th>
-            <th>Loại</th>
-            <th>Máy</th>
-            <th>Dung lượng</th>
-            <th>Giá</th>
-            <th>Trạng thái</th>
-            <th>Thời gian chờ</th>
-          </tr>
-        </thead>
-        <tbody id="historyBody">
-          <tr><td colspan="7" class="helper-text">Đang tải dữ liệu...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 </main>
 
+<!-- Modal chi tiết -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <h2 id="modalTitle">Phiếu yêu cầu</h2>
+        <span id="modalSheetBadge" class="modal-sheet-badge hidden"></span>
+      </div>
+      <div class="modal-title-actions">
+        <span id="modalStatusBadge" class="badge badge-gray hidden"></span>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
 <script>
-window.APP_CONFIG = window.APP_CONFIG || {
-  API_BASE_URL: 'https://script.google.com/macros/s/AKfycbydAa3Bx4w-nRCutklIZXmCv2676-ChpbK9vigpCZEPnNz0Umfj8NI5BigeezKL5IsB/exec'
+// ================================================================
+//  CONFIG
+// ================================================================
+const SHEETS = [
+  { name: 'CN45', label: 'CN45' },
+  { name: 'CN141', label: 'CN141' },
+  { name: 'Kho bảo hành', label: 'Kho bảo hành' },
+  { name: 'Kho thu cũ', label: 'Kho thu cũ' },
+  { name: 'Kho nhập hàng', label: 'Kho nhập hàng' },
+];
+
+const NOI_XU_LY_OPTIONS = [
+  'Tinh Apple',
+  'Thành duy',
+  'SamSung',
+  '288',
+  'Hạo',
+  'Khắc',
+  'Tường Mobile',
+  'Đức Anh Store',
+  'Táo 79',
+  'Toàn SG',
+  'Đoàn Trung HN',
+  'Thảo Tuấn',
+  'Cửa hàng',
+  'Kho - Toàn',
+  'Kho - Đạt',
+  'Kho - Trung',
+  'KT - Đậu',
+];
+
+const TRANG_THAI_BY_SHEET = {
+  'CN45': {
+    primary: [
+      'Chưa xử lý',
+      'Sửa chữa xong',
+      'Đang sửa chữa',
+      'Báo chưa xong',
+      'Đã trả khách',
+      'Chờ trả khách',
+      'Đang kiểm tra',
+      'Chờ khách đồng ý báo giá',
+      'Chờ',
+    ],
+    secondary: [
+      'Đang sửa chữa',
+      'Sửa chữa xong',
+      'Đã trả khách',
+      'Chờ trả khách',
+      'Đang kiểm tra',
+      'Chờ khách đồng ý báo giá',
+    ],
+  },
+  'CN141': {
+    primary: [
+      'Chưa xử lý',
+      'Sửa chữa xong',
+      'Đang sửa chữa',
+      'Báo chưa xong',
+      'Đã trả khách',
+      'Chờ trả khách',
+      'Đang kiểm tra',
+      'Chờ khách đồng ý báo giá',
+      'Chờ',
+    ],
+    secondary: [
+      'Đang sửa chữa',
+      'Sửa chữa xong',
+      'Đã trả khách',
+      'Chờ trả khách',
+      'Đang kiểm tra',
+      'Chờ khách đồng ý báo giá',
+    ],
+  },
+  'Kho bảo hành': {
+    primary: [
+      'Đang xử lý',
+      'Không lỗi',
+      'NCC bảo hành',
+      'NCC đổi máy/Trả máy trừ CN',
+      'Bán lại',
+      'Đổi trả hàng',
+      'Quản lý duyệt',
+      'Hoàn Thành',
+      'Lên dư YCSC',
+      'NCC LK bảo hành',
+      'Từ chối bảo hành',
+      'Khác',
+    ],
+    secondary: [
+      'Nhận máy',
+      'Kiểm tra',
+      'Sửa chữa',
+      'Sửa chữa xong',
+      'Chờ trả khách',
+      'Hoàn thành',
+    ],
+  },
+  'Kho thu cũ': {
+    primary: [
+      'Đang xử lý',
+      'Hoàn thành',
+    ],
+    secondary: [
+      'Hoàn thành',
+      'Đang xử lý',
+    ],
+  },
+  'Kho nhập hàng': {
+    primary: [
+      'Đang xử lý',
+      'Hoàn thành',
+    ],
+    secondary: [
+      'Chưa xử lý',
+      'Đang kiểm tra',
+      'Đã báo giá',
+      'Đã nhận cọc',
+      'Hoàn thành',
+      'Khác',
+    ],
+  },
+  'DEFAULT': {
+    primary: [
+      'Chờ xử lý',
+      'Đang xử lý',
+      'Hoàn thành',
+      'Đã hủy',
+      'Từ chối',
+      'Đã báo giá',
+    ],
+    secondary: [
+      'Chờ xử lý',
+      'Đang xử lý',
+      'Hoàn thành',
+      'Đã hủy',
+      'Từ chối',
+      'Đã báo giá',
+    ],
+  },
 };
 
-const API_BASE = window.APP_CONFIG.API_BASE_URL || '';
-const els = {};
+const TRANG_THAI_COLORS = {
+  'Chờ xử lý': 'badge-yellow',
+  'Chưa xử lý': 'badge-blue',
+  'Đang xử lý': 'badge-blue',
+  'Hoàn thành': 'badge-green',
+  'Đã hủy': 'badge-red',
+  'Từ chối': 'badge-red',
+  'Đã báo giá': 'badge-orange',
+  'Đã gửi': 'badge-green',
+  'Sửa chữa xong': 'badge-green',
+  'Đang sửa chữa': 'badge-blue',
+  'Báo chưa xong': 'badge-orange',
+  'Đã trả khách': 'badge-green',
+  'Chờ trả khách': 'badge-yellow',
+  'Đang kiểm tra': 'badge-blue',
+  'Chờ khách đồng ý báo giá': 'badge-yellow',
+  'Chờ': 'badge-gray',
+  'Không lỗi': 'badge-green',
+  'NCC bảo hành': 'badge-blue',
+  'NCC đổi máy/Trả máy trừ CN': 'badge-orange',
+  'Bán lại': 'badge-yellow',
+  'Đổi trả hàng': 'badge-red',
+  'Quản lý duyệt': 'badge-yellow',
+  'Hoàn Thành': 'badge-green',
+  'Lên dư YCSC': 'badge-blue',
+  'NCC LK bảo hành': 'badge-blue',
+  'Từ chối bảo hành': 'badge-red',
+  'Khác': 'badge-gray',
+};
 
+let currentSheet = '';
+let currentView = 'ycsc';
+let currentPhieuList = [];
+let supportRequestsCache = [];
+let searchTimeout = null;
+let fakeLoadingTimer = null;
+let currentPage = 1;
+const PAGE_SIZE = 15;
+const AUTH_STORAGE_KEY = 'phieu_dashboard_admin_auth';
+let appInitialized = false;
+
+// ================================================================
+//  INIT
+// ================================================================
 window.addEventListener('DOMContentLoaded', () => {
-  cacheElements();
+  bindAuthEvents();
   bindEvents();
-  loadDashboard();
-  setInterval(loadDashboard, 30000);
+  initializeAuthState();
 });
 
-function cacheElements() {
-  els.rangeSelect = document.getElementById('rangeSelect');
-  els.refreshBtn = document.getElementById('refreshBtn');
-  els.dashboardState = document.getElementById('dashboardState');
-  els.historyBody = document.getElementById('historyBody');
-  els.toggleMoreBtn = document.getElementById('toggleMoreBtn');
-  els.toggleMoreIcon = document.getElementById('toggleMoreIcon');
-  els.moreStatsWrap = document.getElementById('moreStatsWrap');
+function initializeApp() {
+  if (appInitialized) return;
+  appInitialized = true;
+  renderTabs();
+  loadAllSheetsData();
+  const receiveBtn = document.getElementById('receiveBtn');
+  const buyPartsQuickBtn = document.getElementById('buyPartsQuickBtn');
+  const sendBtn = document.getElementById('sendBtn');
+  if (receiveBtn) receiveBtn.style.display = '';
+  if (buyPartsQuickBtn) buyPartsQuickBtn.style.display = '';
+  if (sendBtn) sendBtn.style.display = '';
+}
+
+function bindAuthEvents() {
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await handleLoginSubmit();
+    });
+  }
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logoutAdmin);
+  }
+}
+
+function getStoredAuth() {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function getSupportLocationOptionsByAccount() {
+  const auth = getStoredAuth() || {};
+  const username = String(auth.username || '').trim().toLowerCase();
+  const isKhoAccount = username === 'kho';
+  if (isKhoAccount) {
+    return ['CN45', 'CN141'];
+  }
+  return ['Kho'];
+}
+
+function renderSupportLocationOptions() {
+  const select = document.getElementById('supportLocation');
+  if (!select) return;
+  const options = getSupportLocationOptionsByAccount();
+  select.innerHTML = options.map(function(opt) {
+    return `<option value="${esc(opt)}">${esc(opt)}</option>`;
+  }).join('');
+}
+
+function setStoredAuth(auth) {
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth || {}));
+}
+
+function clearStoredAuth() {
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+}
+
+function setAuthError(message) {
+  const el = document.getElementById('loginError');
+  if (!el) return;
+  if (message) {
+    el.textContent = message;
+    el.classList.remove('hidden');
+  } else {
+    el.textContent = '';
+    el.classList.add('hidden');
+  }
+}
+
+function showAuthenticatedApp(auth) {
+  const loginScreen = document.getElementById('loginScreen');
+  const appShell = document.getElementById('appShell');
+  if (loginScreen) loginScreen.classList.add('hidden');
+  if (appShell) appShell.classList.remove('hidden');
+  const userChip = document.getElementById('currentUsername');
+  if (userChip) {
+    userChip.textContent = (auth && (auth.displayName || auth.username)) ? String(auth.displayName || auth.username) : '';
+    userChip.classList.toggle('hidden', !userChip.textContent);
+  }
+  initializeApp();
+}
+
+function showLoginScreen() {
+  const loginScreen = document.getElementById('loginScreen');
+  const appShell = document.getElementById('appShell');
+  if (loginScreen) loginScreen.classList.remove('hidden');
+  if (appShell) appShell.classList.add('hidden');
+}
+
+function initializeAuthState() {
+  const auth = getStoredAuth();
+  if (auth && auth.username) {
+    showAuthenticatedApp(auth);
+  } else {
+    showLoginScreen();
+  }
+}
+
+async function handleLoginSubmit() {
+  const username = document.getElementById('loginUsername')?.value.trim() || '';
+  const password = document.getElementById('loginPassword')?.value || '';
+  const btn = document.getElementById('loginSubmitBtn');
+  setAuthError('');
+  if (!username || !password) {
+    setAuthError('Vui lòng nhập tài khoản và mật khẩu');
+    return;
+  }
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Đang đăng nhập...';
+  }
+  try {
+    const res = await apiPost('adminLogin', { username, password });
+    const data = res && res.data ? res.data : res;
+    const auth = {
+      username: data.username || username,
+      displayName: data.displayName || data.username || username
+    };
+    setStoredAuth(auth);
+    document.getElementById('loginPassword').value = '';
+    showAuthenticatedApp(auth);
+  } catch (err) {
+    setAuthError(err.message || 'Đăng nhập thất bại');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Đăng nhập';
+    }
+  }
+}
+
+function logoutAdmin() {
+  clearStoredAuth();
+  showLoginScreen();
+}
+
+function renderTabs() {
+  const wrap = document.getElementById('tabsWrap');
+  wrap.innerHTML = '<button class="tab-btn active" data-view="ycsc" data-sheet="">Tất cả</button>' +
+    SHEETS.map(s => `<button class="tab-btn" data-view="ycsc" data-sheet="${esc(s.name)}">${esc(s.label)}<span class="tab-count" id="tabCount_${esc(s.name).replace(/\s/g,'_')}">0</span></button>`).join('') +
+    '<button class="tab-btn" data-view="support" data-sheet="">Phiếu hỗ trợ<span class="tab-count" id="tabCount_SUPPORT">0</span></button>';
 }
 
 function bindEvents() {
-  els.rangeSelect.addEventListener('change', () => loadDashboard());
-  els.refreshBtn.addEventListener('click', () => loadDashboard());
-  els.toggleMoreBtn.addEventListener('click', toggleMoreStats);
-}
-
-function toggleMoreStats() {
-  const expanded = els.moreStatsWrap.classList.toggle('hidden');
-  els.toggleMoreIcon.textContent = expanded ? '▶' : '▼';
-  els.toggleMoreBtn.querySelector('span:last-child').textContent = expanded ? 'Xem thêm' : 'Thu gọn';
-}
-
-function getRangeStartMs(range) {
-  const now = new Date();
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  switch (range) {
-    case 'yesterday': return todayStart.getTime() - 86400000;
-    case '3days': return todayStart.getTime() - 2 * 86400000;
-    case '7days': return todayStart.getTime() - 6 * 86400000;
-    case '30days': return todayStart.getTime() - 29 * 86400000;
-    case 'all': return 0;
-    default: return todayStart.getTime();
-  }
-}
-
-async function loadDashboard() {
-  setState('Đang tải dashboard...');
-  const range = els.rangeSelect.value || 'today';
-  const rangeStart = getRangeStartMs(range);
-  try {
-    const [stats, history] = await Promise.all([
-      apiCall('dashboardStats'),
-      apiCall('dashboardHistory', { limit: 100 })
-    ]);
-    renderStats(stats || {});
-    const filtered = filterByRange(history, rangeStart);
-    renderHistory(filtered);
-    setState('Đã cập nhật lúc ' + new Date().toLocaleString('vi-VN'));
-  } catch (err) {
-    setState('Lỗi tải dữ liệu: ' + err.message, true);
-    els.historyBody.innerHTML = '<tr><td colspan="7" class="error-text">Không tải được lịch sử phiếu.</td></tr>';
-  }
-}
-
-function filterByRange(items, rangeStart) {
-  if (!rangeStart) return items;
-  return items.filter(item => {
-    const ts = item.timestamp ? new Date(item.timestamp).getTime() : 0;
-    return ts >= rangeStart;
+  // Tab clicks
+  document.getElementById('tabsWrap').addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView = btn.dataset.view || 'ycsc';
+    currentSheet = btn.dataset.sheet || '';
+    updateStatusOptions();
+    const receiveBtn = document.getElementById('receiveBtn');
+    const buyPartsQuickBtn = document.getElementById('buyPartsQuickBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const showShipBtns = (currentView === 'ycsc' && !currentSheet);
+    if (receiveBtn) receiveBtn.style.display = showShipBtns ? '' : 'none';
+    if (buyPartsQuickBtn) buyPartsQuickBtn.style.display = showShipBtns ? '' : 'none';
+    if (sendBtn) sendBtn.style.display = showShipBtns ? '' : 'none';
+    if (currentView === 'support') {
+      loadSupportRequests();
+    } else {
+      applyFilters();
+    }
   });
+
+  const receiveBtn = document.getElementById('receiveBtn');
+  if (receiveBtn) {
+    receiveBtn.addEventListener('click', () => {
+      if (currentView === 'ycsc' && !currentSheet) openReceiveModal();
+    });
+  }
+  const buyPartsQuickBtn = document.getElementById('buyPartsQuickBtn');
+  if (buyPartsQuickBtn) {
+    buyPartsQuickBtn.addEventListener('click', () => {
+      if (currentView === 'ycsc' && !currentSheet) openBuyPartsModal();
+    });
+  }
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
+      if (currentView === 'ycsc' && !currentSheet) openSendModal();
+    });
+  }
+
+  // Search
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const q = searchInput.value.trim();
+    if (q.length < 1) {
+      hideSearchDropdown();
+      applyFilters();
+      return;
+    }
+    searchTimeout = setTimeout(() => doSuggest(q), 200);
+  });
+  searchInput.addEventListener('blur', () => setTimeout(hideSearchDropdown, 200));
+  searchInput.addEventListener('focus', () => {
+    const q = searchInput.value.trim();
+    if (q.length >= 1) doSuggest(q);
+  });
+
+  // Filters
+  document.getElementById('filterTime').addEventListener('change', () => {
+    toggleCustomDateFilters();
+    applyFilters();
+  });
+  document.getElementById('filterDateFrom').addEventListener('change', applyFilters);
+  document.getElementById('filterDateTo').addEventListener('change', applyFilters);
+  document.getElementById('filterStatusBtn').addEventListener('click', toggleStatusFilter);
+  document.getElementById('clearFilterBtn').addEventListener('click', clearFilters);
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('statusFilterWrap');
+    if (wrap && !wrap.contains(e.target)) document.getElementById('filterStatusMenu').classList.add('hidden');
+  });
+
+  // KPI Toggle
+  document.getElementById('kpiToggle').addEventListener('click', () => {
+    const grid = document.getElementById('kpiGrid');
+    const btn = document.getElementById('kpiToggle');
+    const arrow = btn.querySelector('span:last-child');
+    grid.classList.toggle('hidden');
+    arrow.textContent = grid.classList.contains('hidden') ? '▼' : '▲';
+  });
+
+  // Modal close
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  // ESC to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+// ================================================================
+//  API CALLS
+// ================================================================
+window.APP_CONFIG = window.APP_CONFIG || {
+  API_BASE_URL: 'https://script.google.com/macros/s/AKfycbzykQ-wOA6RKifHcIHhZfQ_o6ZfBG5dZ6srFwx8w4_NE1muHKIuiQu-nRjIS7PnaPIM/exec'
+};
+
+const API_BASE = window.APP_CONFIG.API_BASE_URL || '';
+
+function formatLarkToast_(savedLabel, res) {
+  const data = res && res.data ? res.data : {};
+  if (data.larkSent === false) {
+    const err = String(data.larkError || 'lỗi không xác định').slice(0, 120);
+    return savedLabel + ' (Lark: ' + err + ')';
+  }
+  return savedLabel + ' & gửi Lark!';
+}
+
+function fireGuiHangLark_(kind, items, place) {
+  if (!items || !items.length) return;
+  apiPost('notifyGuiHangLark', { kind, items, place }).then(function(res) {
+    if (res && res.data && res.data.larkSent === false) {
+      showToast('Lark: ' + String(res.data.larkError || 'chưa gửi được').slice(0, 100));
+    }
+  }).catch(function() {});
 }
 
 function apiCall(action, params) {
@@ -506,95 +1691,2449 @@ function apiCall(action, params) {
   });
 }
 
-function renderStats(d) {
-  const total = Number(d.total || d.totalRequests || 0);
-  const buyback = Number(d.buyback || d.buybackRequests || 0);
-  const repair = Number(d.repair || d.repairRequests || 0);
-  const priced = Number(d.priced || d.pricedRequests || 0);
-  const pending = Number(d.pending || d.pendingRequests || 0);
-  const overdue10 = Number(d.overdue10 || d.overdue10m || 0);
-  const overdue30 = Number(d.overdue30 || d.overdue30m || 0);
-  const responseRate = total ? Math.round((priced / total) * 100) : Number(d.responseRate || 0);
-
-  setText('kpiTotal', fmtNum(total));
-  setText('kpiTotalNote', 'Thu: ' + fmtNum(buyback) + ' · Sửa: ' + fmtNum(repair));
-  setText('kpiPriced', fmtNum(priced));
-  setText('kpiPricedNote', fmtNum(responseRate) + '% tổng phiếu');
-  setText('kpiPending', fmtNum(pending));
-  setText('kpiPendingNote', pending ? 'Đang chờ phản hồi' : 'Không có phiếu chờ');
-  setText('kpiOverdue', fmtNum(overdue10));
-  setText('kpiOverdueNote', 'Quá 10 phút: ' + fmtNum(overdue10) + ' · Quá 30 phút: ' + fmtNum(overdue30));
-  setText('kpiToday', fmtNum(Number(d.today || d.todayRequests || 0)));
-  setText('kpiWeek', fmtNum(Number(d.week || d.weekRequests || 0)));
-  setText('kpiMonth', fmtNum(Number(d.month || d.monthRequests || 0)));
-  setText('kpiAvgResponseTime', formatResponseTime(Number(d.avgResponseTimeMin || 0)));
-  setText('kpiUpdatedAt', d.updatedAt ? 'Cập nhật: ' + d.updatedAt : 'Số phiếu 30 ngày qua');
+function apiPost(action, payload) {
+  const base = API_BASE || window.location.href.split('?')[0];
+  return fetch(base, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(Object.assign({ action }, payload || {})),
+  }).then((res) => {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }).then((data) => {
+    if (data && data.error) throw new Error(data.error);
+    return data;
+  });
 }
 
-function renderHistory(items) {
-  if (!items.length) {
-    els.historyBody.innerHTML = '<tr><td colspan="7" class="helper-text">Không có phiếu trong khoảng thời gian này.</td></tr>';
+// ================================================================
+//  LOAD DATA
+// ================================================================
+let allDataCache = {};
+
+async function loadAllSheetsData() {
+  showLoading(true);
+  guiHangCacheReady = false;
+  guiHangLoadPromise = null;
+  try {
+    apiCall('hideColumnH').catch(() => {});
+    guiHangLoadPromise = loadGuiHangCache();
+    const results = await Promise.all([
+      Promise.all(SHEETS.map(s => apiCall('list', { sheet: s.name, limit: 5000 }))),
+      guiHangLoadPromise,
+    ]);
+    allDataCache = {};
+    SHEETS.forEach((s, i) => {
+      allDataCache[s.name] = (results[0][i] && results[0][i].data) || [];
+    });
+    buyPartsYCSCIndex = [];
+    buildBuyPartsYCSCIndex();
+    updateTabCounts();
+    applyFilters();
+    showLoading(false);
+  } catch (err) {
+    showLoading(false);
+    showToast('Lỗi tải dữ liệu: ' + err.message);
+  }
+}
+
+function updateTabCounts() {
+  SHEETS.forEach(s => {
+    const count = (allDataCache[s.name] || []).length;
+    const el = document.getElementById('tabCount_' + s.name.replace(/\s/g, '_'));
+    if (el) el.textContent = count;
+  });
+}
+
+// ================================================================
+//  FILTERS
+// ================================================================
+function getFilteredData() {
+  let data = [];
+  const sheetKeys = currentSheet ? [currentSheet] : SHEETS.map(s => s.name);
+
+  sheetKeys.forEach(name => {
+    (allDataCache[name] || []).forEach(p => data.push(p));
+  });
+
+  const timeRange = document.getElementById('filterTime').value;
+  if (timeRange && timeRange !== 'all') {
+    if (timeRange === 'custom') {
+      const fromVal = document.getElementById('filterDateFrom').value;
+      const toVal = document.getElementById('filterDateTo').value;
+      if (fromVal || toVal) {
+        data = data.filter(p => {
+          if (!p.thoiGianTao) return false;
+          const d = new Date(p.thoiGianTao);
+          if (isNaN(d.getTime())) return false;
+          const dt = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+          if (fromVal) {
+            const from = new Date(fromVal).getTime();
+            if (dt < from) return false;
+          }
+          if (toVal) {
+            const to = new Date(toVal).getTime();
+            if (dt > to) return false;
+          }
+          return true;
+        });
+      }
+    } else {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      let startTime;
+      if (timeRange === 'today') startTime = today.getTime();
+      else if (timeRange === 'yesterday') startTime = today.getTime() - 86400000;
+      else if (timeRange === '7days') startTime = today.getTime() - 6 * 86400000;
+      else if (timeRange === '30days') startTime = today.getTime() - 29 * 86400000;
+      if (startTime) {
+        data = data.filter(p => {
+          if (!p.thoiGianTao) return false;
+          const d = new Date(p.thoiGianTao);
+          return !isNaN(d.getTime()) && d.getTime() >= startTime;
+        });
+      }
+    }
+  }
+
+  const selectedStatuses = getSelectedStatuses();
+  if (selectedStatuses.length) {
+    data = data.filter(p => {
+      let status;
+      if (p.sheetName === 'Kho thu cũ' || p.sheetName === 'Kho nhập hàng') {
+        status = p.hoanThanh ? 'Hoàn thành' : 'Đang xử lý';
+      } else {
+        status = p.trangThaiChinh || 'Chưa xử lý';
+      }
+      return selectedStatuses.includes(status);
+    });
+  }
+
+  // Sort: Đang xử lý (cột H) lên đầu, sau đó ưu tiên CN45/CN141, cuối cùng theo thời gian
+  const nowTime = new Date().getTime();
+  data.sort((a, b) => {
+    const isDangXuLyH = (p) => {
+      if (p.sheetName === 'Kho thu cũ' || p.sheetName === 'Kho nhập hàng') {
+        return !p.hoanThanh;
+      }
+      return String(p.trangThaiChinh || '').trim() === 'Đang xử lý';
+    };
+    const aDangXuLy = isDangXuLyH(a) ? 0 : 1;
+    const bDangXuLy = isDangXuLyH(b) ? 0 : 1;
+    if (aDangXuLy !== bDangXuLy) return aDangXuLy - bDangXuLy;
+
+    const sa = a.trangThaiChinh || 'Chưa xử lý';
+    const sb = b.trangThaiChinh || 'Chưa xử lý';
+    if (currentSheet === 'CN45' || currentSheet === 'CN141') {
+      const aOverdue = !a.trangThaiChinh && a.thoiGianTao && ((nowTime - new Date(a.thoiGianTao).getTime()) / 86400000 > 5);
+      const bOverdue = !b.trangThaiChinh && b.thoiGianTao && ((nowTime - new Date(b.thoiGianTao).getTime()) / 86400000 > 5);
+      if (aOverdue && !bOverdue) return -1;
+      if (!aOverdue && bOverdue) return 1;
+
+      const statusPriority = { 'Chưa xử lý': 0, 'Đang kiểm tra': 1 };
+      const pa = statusPriority[sa] ?? 999;
+      const pb = statusPriority[sb] ?? 999;
+      if (pa !== pb) return pa - pb;
+    }
+
+    const ta = a.thoiGianTao ? new Date(a.thoiGianTao).getTime() : 0;
+    const tb = b.thoiGianTao ? new Date(b.thoiGianTao).getTime() : 0;
+    return tb - ta;
+  });
+
+  return data;
+}
+
+function applyFilters() {
+  if (currentView === 'support') {
+    loadSupportRequests();
+    return;
+  }
+  if (currentView === 'assigned') {
+    loadAssignedTickets();
+    return;
+  }
+  document.getElementById('searchWrap').classList.remove('hidden');
+  document.getElementById('filterRow').classList.remove('hidden');
+  document.getElementById('kpiToggle').parentElement.classList.remove('hidden');
+  document.getElementById('emptyState').textContent = 'Không có phiếu phù hợp';
+  const dateFiltered = getDateFilteredData();
+  const filtered = getFilteredData();
+  currentPhieuList = filtered;
+  currentPage = 1;
+  renderKPI(dateFiltered);
+  renderTickets(filtered);
+  updateStatusOptions();
+}
+
+function getCurrentTabData() {
+  let data = [];
+  const sheetKeys = currentSheet ? [currentSheet] : SHEETS.map(s => s.name);
+  sheetKeys.forEach(name => {
+    (allDataCache[name] || []).forEach(p => data.push(p));
+  });
+  return data;
+}
+
+function getDateFilteredData() {
+  let data = getCurrentTabData();
+  const timeRange = document.getElementById('filterTime').value;
+  if (!timeRange || timeRange === 'all') return data;
+
+  if (timeRange === 'custom') {
+    const fromVal = document.getElementById('filterDateFrom').value;
+    const toVal = document.getElementById('filterDateTo').value;
+    if (!fromVal && !toVal) return data;
+    return data.filter(p => {
+      if (!p.thoiGianTao) return false;
+      const d = new Date(p.thoiGianTao);
+      if (isNaN(d.getTime())) return false;
+      const dt = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+      if (fromVal && dt < new Date(fromVal).getTime()) return false;
+      if (toVal && dt > new Date(toVal).getTime()) return false;
+      return true;
+    });
+  }
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let startTime;
+  if (timeRange === 'today') startTime = today.getTime();
+  else if (timeRange === 'yesterday') startTime = today.getTime() - 86400000;
+  else if (timeRange === '7days') startTime = today.getTime() - 6 * 86400000;
+  else if (timeRange === '30days') startTime = today.getTime() - 29 * 86400000;
+  if (!startTime) return data;
+
+  return data.filter(p => {
+    if (!p.thoiGianTao) return false;
+    const d = new Date(p.thoiGianTao);
+    return !isNaN(d.getTime()) && d.getTime() >= startTime;
+  });
+}
+
+function updateStatusOptions() {
+  const selected = getSelectedStatuses();
+	const config = TRANG_THAI_BY_SHEET[currentSheet] || TRANG_THAI_BY_SHEET.DEFAULT;
+		const statusList = config.primary || [];
+  const menu = document.getElementById('filterStatusMenu');
+  menu.innerHTML = statusList.map(s => {
+    const checked = selected.includes(s);
+    return `<label class="status-filter-item"><input type="checkbox" value="${esc(s)}" ${checked ? 'checked' : ''}><span>${esc(s)}</span></label>`;
+  }).join('');
+  menu.querySelectorAll('input').forEach(cb => cb.addEventListener('change', onStatusCheckboxChange));
+  updateStatusLabel();
+}
+
+function toggleCustomDateFilters() {
+  const isCustom = document.getElementById('filterTime').value === 'custom';
+  document.getElementById('filterDateFrom').classList.toggle('hidden', !isCustom);
+  document.getElementById('filterDateTo').classList.toggle('hidden', !isCustom);
+}
+
+function getSelectedStatuses() {
+  return Array.from(document.querySelectorAll('#filterStatusMenu input:checked')).map(cb => cb.value);
+}
+
+function toggleStatusFilter() {
+  document.getElementById('filterStatusMenu').classList.toggle('hidden');
+}
+
+function onStatusCheckboxChange() {
+  updateStatusLabel();
+  applyFilters();
+}
+
+function updateStatusLabel() {
+  const selected = getSelectedStatuses();
+  const btn = document.getElementById('filterStatusBtn');
+  btn.textContent = selected.length ? `Trạng thái (${selected.length})` : 'Tất cả trạng thái';
+}
+
+function clearFilters() {
+  document.getElementById('filterTime').value = 'all';
+  document.getElementById('filterDateFrom').value = '';
+  document.getElementById('filterDateTo').value = '';
+  toggleCustomDateFilters();
+  document.querySelectorAll('#filterStatusMenu input').forEach(cb => { cb.checked = false; });
+  updateStatusLabel();
+  document.getElementById('searchInput').value = '';
+  hideSearchDropdown();
+  applyFilters();
+}
+
+// ================================================================
+//  RENDER KPI
+// ================================================================
+function getStatusBadgeClass(status) {
+  return TRANG_THAI_COLORS[status] || 'badge-gray';
+}
+
+function getSecondaryStatusBySheet(sheetName, phieu) {
+  const config = TRANG_THAI_BY_SHEET[sheetName] || TRANG_THAI_BY_SHEET.DEFAULT;
+  const raw = String(phieu?.trangThaiPhu || '').trim();
+  if (raw) return raw;
+  if (sheetName === 'Kho thu cũ' || sheetName === 'Kho nhập hàng') {
+    return phieu?.hoanThanh ? 'Hoàn thành' : 'Đang xử lý';
+  }
+  return '';
+}
+
+function renderKPI(data) {
+  const total = data.length;
+  const now = new Date();
+  const nowTime = now.getTime();
+
+  // Chưa trả khách
+  const chuaTra = data.filter(p => p.trangThaiChinh !== 'Sửa chữa xong' && !p.repairTime);
+  let le3 = 0, le7 = 0, gt7 = 0;
+  chuaTra.forEach(p => {
+    if (!p.thoiGianTao) return;
+    const created = new Date(p.thoiGianTao).getTime();
+    if (isNaN(created)) return;
+    const days = (nowTime - created) / 86400000;
+    if (days <= 3) le3++;
+    else if (days <= 7) le7++;
+    else gt7++;
+  });
+
+  const repairRows = data.filter(p => p.repairTime !== undefined && p.repairTime !== '');
+  let avgRepairDays = 0;
+  if (repairRows.length) {
+    const sumRepair = repairRows.reduce((sum, p) => sum + (Number(p.repairTime) || 0), 0);
+    avgRepairDays = (sumRepair / repairRows.length).toFixed(1);
+  }
+
+  let html = `
+    <div class="kpi-card">
+      <p class="kpi-label">Tổng phiếu</p>
+      <div class="kpi-value">${fmtNum(total)}</div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Đã trả khách</p>
+      <div class="kpi-value"><span class="badge badge-green" style="font-size:22px;padding:6px 14px;">${fmtNum(data.length - chuaTra.length)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Chưa xử lý</p>
+      <div class="kpi-value"><span class="badge badge-blue" style="font-size:22px;padding:6px 14px;">${fmtNum(data.filter(p => !p.trangThaiChinh).length)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Chờ trả khách</p>
+      <div class="kpi-value"><span class="badge badge-yellow" style="font-size:22px;padding:6px 14px;">${fmtNum(data.filter(p => p.trangThaiChinh === 'Chờ trả khách').length)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Đang kiểm tra</p>
+      <div class="kpi-value"><span class="badge badge-orange" style="font-size:22px;padding:6px 14px;">${fmtNum(data.filter(p => p.trangThaiChinh === 'Đang kiểm tra').length)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Chưa sửa ≤3 ngày</p>
+      <div class="kpi-value"><span class="badge badge-green" style="font-size:22px;padding:6px 14px;">${fmtNum(le3)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Chưa sửa ≤7 ngày</p>
+      <div class="kpi-value"><span class="badge badge-yellow" style="font-size:22px;padding:6px 14px;">${fmtNum(le7)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">Chưa sửa >7 ngày</p>
+      <div class="kpi-value"><span class="badge badge-red" style="font-size:22px;padding:6px 14px;">${fmtNum(gt7)}</span></div>
+    </div>
+    <div class="kpi-card">
+      <p class="kpi-label">TB thời gian sửa chữa</p>
+      <div class="kpi-value"><span class="badge badge-blue" style="font-size:22px;padding:6px 14px;">${avgRepairDays} ngày</span></div>
+    </div>`;
+
+  document.getElementById('kpiGrid').innerHTML = html;
+}
+
+// ================================================================
+//  RENDER TICKETS
+// ================================================================
+function renderTickets(data) {
+  const wrap = document.getElementById('ticketsWrap');
+  const empty = document.getElementById('emptyState');
+  let pager = document.getElementById('pagerWrap');
+
+  if (!data.length) {
+    wrap.classList.add('hidden');
+    empty.classList.remove('hidden');
+    if (pager) pager.classList.add('hidden');
     return;
   }
 
-  els.historyBody.innerHTML = items.map((item) => {
-    const modeRaw = String(item.mode || '').toLowerCase();
-    const isRepair = modeRaw === 'repair' || item.mode === 'Sửa chữa';
-    const price = Number(item.price || 0);
-    const isPending = item.isPending !== undefined ? item.isPending : price <= 0;
-    const modeText = isRepair ? 'Sửa chữa' : 'Thu máy';
-    const timeText = item.time || item.timeLabel || '';
-    const waitText = item.waitLabel || (isPending ? 'Đang chờ' : 'Đã phản hồi');
+  empty.classList.add('hidden');
+  wrap.classList.remove('hidden');
+
+  const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const pageData = data.slice(startIdx, startIdx + PAGE_SIZE);
+
+  const nowTime = new Date().getTime();
+  wrap.innerHTML = pageData.map(p => {
+    let statusPrimary, statusSecondary, badgeClass;
+    if (p.sheetName === 'Kho thu cũ' || p.sheetName === 'Kho nhập hàng') {
+      statusPrimary = p.hoanThanh ? 'Hoàn thành' : 'Đang xử lý';
+      statusSecondary = p.trangThaiPhu || '';
+      badgeClass = p.hoanThanh ? 'badge-green' : 'badge-blue';
+    } else {
+      statusPrimary = p.trangThaiChinh || 'Chưa xử lý';
+      statusSecondary = getSecondaryStatusBySheet(p.sheetName, p);
+      badgeClass = getStatusBadgeClass(statusPrimary);
+    }
+    const tg = p.thoiGianTao ? formatDateOnly(p.thoiGianTao) : '';
+    const isOverdue = !p.trangThaiChinh && p.thoiGianTao && ((nowTime - new Date(p.thoiGianTao).getTime()) / 86400000 > 5);
+    const cardClass = isOverdue ? 'ticket-card overdue-unprocessed' : 'ticket-card';
     return `
-      <tr>
-        <td>${escapeHtml(timeText)}</td>
-        <td><span class="badge ${isRepair ? 'badge-yellow' : 'badge-blue'}">${modeText}</span></td>
-        <td>${escapeHtml(item.deviceName || '')}</td>
-        <td>${escapeHtml(item.storage || '-')}</td>
-        <td>${price > 0 ? '<span class="success-text">' + fmtVnd(price) + '</span>' : '-'}</td>
-        <td><span class="badge ${isPending ? 'badge-red' : 'badge-green'}">${isPending ? 'Chưa có giá' : 'Đã có giá'}</span></td>
-        <td><span class="badge ${item.isLate ? 'badge-red' : (isPending ? 'badge-gray' : 'badge-green')}">${escapeHtml(waitText)}</span></td>
-      </tr>`;
+      <div class="${cardClass}" onclick="openDetail('${esc(p.sheetName)}','${esc(p.maYeuCau)}')">
+        <div class="ticket-left">
+          <div class="ticket-ma">${esc(p.maYeuCau)}</div>
+          <div class="ticket-ten">${esc(p.tenHangSuaChua)}</div>
+${p.ghiChuYCSC ? '<div class="ticket-meta" style="margin-top:2px;"><span style="color:#64748b;font-size:12px;">- ' + esc(p.ghiChuYCSC) + '</span></div>' : ''}
+          <div class="ticket-meta">
+            <span>${esc(tg)}</span>
+            <span>&#183;</span>
+            <span>${esc(p.sheetName)}</span>
+          </div>
+        </div>
+        <div class="ticket-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <span class="badge ${badgeClass}">${esc(statusPrimary)}</span>
+          ${statusSecondary ? `<span class="badge badge-gray" style="font-size:10px;opacity:.9;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(statusSecondary)}</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+
+  renderPager(totalPages);
+}
+
+function renderPager(totalPages) {
+  let pager = document.getElementById('pagerWrap');
+  if (!pager) {
+    pager = document.createElement('div');
+    pager.id = 'pagerWrap';
+    pager.className = 'pager-wrap';
+    const ticketsWrap = document.getElementById('ticketsWrap');
+    ticketsWrap.parentNode.insertBefore(pager, ticketsWrap.nextSibling);
+  }
+
+  if (totalPages <= 1) {
+    pager.classList.add('hidden');
+    pager.innerHTML = '';
+    return;
+  }
+
+  pager.classList.remove('hidden');
+
+  // Tính range hiển thị (tối đa 10 nút số)
+  const maxButtons = 10;
+  let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+  let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+  if (endPage - startPage + 1 < maxButtons) {
+    startPage = Math.max(1, endPage - maxButtons + 1);
+  }
+
+  let html = '';
+  if (currentPage > 1) {
+    html += `<button class="pager-btn" onclick="goToPage(${currentPage - 1})">‹ Trước</button>`;
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    const cls = i === currentPage ? 'pager-btn active' : 'pager-btn';
+    html += `<button class="${cls}" onclick="goToPage(${i})">${i}</button>`;
+  }
+  if (currentPage < totalPages) {
+    html += `<button class="pager-btn" onclick="goToPage(${currentPage + 1})">Tiếp ›</button>`;
+  }
+
+  pager.innerHTML = html;
+}
+
+function goToPage(page) {
+  currentPage = page;
+  renderTickets(currentPhieuList);
+  window.scrollTo({ top: document.getElementById('ticketsWrap').offsetTop - 80, behavior: 'smooth' });
+}
+
+async function loadSupportRequests(forceRefresh) {
+  showLoading(true);
+  try {
+    if (forceRefresh || !supportRequestsCache.length) {
+      const res = await apiCall('getSupportRequests');
+      supportRequestsCache = (res && res.data) || [];
+    }
+    const data = supportRequestsCache || [];
+    const countEl = document.getElementById('tabCount_SUPPORT');
+    if (countEl) countEl.textContent = data.length;
+    renderSupportRequests(data);
+  } catch (err) {
+    showToast('Lỗi tải phiếu hỗ trợ: ' + err.message);
+    renderSupportRequests([]);
+  } finally {
+    showLoading(false);
+  }
+}
+
+function renderSupportRequests(data) {
+  const wrap = document.getElementById('ticketsWrap');
+  const empty = document.getElementById('emptyState');
+  const pager = document.getElementById('pagerWrap');
+  if (pager) {
+    pager.classList.add('hidden');
+    pager.innerHTML = '';
+  }
+
+  if (!data.length) {
+    wrap.classList.add('hidden');
+    empty.classList.remove('hidden');
+    empty.textContent = 'Chưa có phiếu hỗ trợ / xin thông tin';
+    return;
+  }
+
+  empty.classList.add('hidden');
+  wrap.classList.remove('hidden');
+  wrap.innerHTML = data.map(r => `
+    <div class="ticket-card" onclick="openSupportDetail('${esc(r.maPhieu)}')">
+      <div class="ticket-left">
+        <div class="ticket-ma">${esc(r.maPhieu)}</div>
+        <div class="ticket-ten">${esc(r.loaiHoTro)} - ${esc(r.noiXuLy)}</div>
+        <div class="ticket-meta">
+          <span>${esc(r.thoiGianTao || '')}</span>
+          <span>&#183;</span>
+          <span>YCSC: ${esc(r.maYeuCauGoc || '')}</span>
+          <span>&#183;</span>
+          <span>${esc(r.sheetGoc || '')}</span>
+        </div>
+      </div>
+      <div class="ticket-right">
+        <span class="badge badge-blue">Hỗ trợ</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ================================================================
+//  ASSIGNED TICKETS (Đã giao)
+// ================================================================
+let assignedTicketsCache = [];
+
+async function loadAssignedTickets(forceRefresh) {
+  showLoading(true);
+  try {
+    if (forceRefresh || !assignedTicketsCache.length) {
+      const res = await apiCall('getAssignedTickets');
+      assignedTicketsCache = (res && res.data) || [];
+    }
+    const data = assignedTicketsCache || [];
+    const countEl = document.getElementById('tabCount_ASSIGNED');
+    if (countEl) countEl.textContent = data.length;
+    renderAssignedTickets(data);
+  } catch (err) {
+    showToast('Lỗi tải phiếu đã giao: ' + err.message);
+    renderAssignedTickets([]);
+  } finally {
+    showLoading(false);
+  }
+}
+
+function renderAssignedTickets(data) {
+  const wrap = document.getElementById('ticketsWrap');
+  const empty = document.getElementById('emptyState');
+  const pager = document.getElementById('pagerWrap');
+  if (pager) {
+    pager.classList.add('hidden');
+    pager.innerHTML = '';
+  }
+
+  if (!data.length) {
+    wrap.classList.add('hidden');
+    empty.classList.remove('hidden');
+    empty.textContent = 'Chưa có phiếu nào được giao';
+    return;
+  }
+
+  empty.classList.add('hidden');
+  wrap.classList.remove('hidden');
+  wrap.innerHTML = data.map(r => {
+    const isDone = String(r.trangThai || '').trim() === 'Hoàn thành';
+    const badgeClass = isDone ? 'badge-green' : 'badge-blue';
+    const badgeText = isDone ? 'Hoàn thành' : 'Đang xử lý';
+    const completeBtn = isDone
+      ? `<div style="font-size:11px;color:#16a34a;font-weight:700;margin-top:4px;">🕒 ${esc(r.thoiGianHoanThanh || '')}</div>`
+      : `<button class="assigned-complete-btn" onclick="event.stopPropagation();completeAssignedTicket('${esc(r.id)}')"> Hoàn thành</button>`;
+    return `
+      <div class="ticket-card">
+        <div class="ticket-left">
+          <div class="ticket-ma">${esc(r.maYeuCau)}</div>
+          <div class="ticket-ten">${esc(r.tenHangSuaChua || '')}</div>
+          <div class="ticket-meta">
+            <span>${esc(r.thoiGianGiao || '')}</span>
+            <span>&#183;</span>
+            <span>👤 ${esc(r.assigneeName)}</span>
+            <span>&#183;</span>
+            <span>${esc(r.sheetGoc || '')}</span>
+            ${r.imei ? '<span>&#183;</span><span>IMEI: ' + esc(r.imei) + '</span>' : ''}
+          </div>
+          ${r.ghiChu ? `<div style="font-size:11px;color:#475569;margin-top:4px;">📝 ${esc(r.ghiChu)}</div>` : ''}
+        </div>
+        <div class="ticket-right">
+          <span class="badge ${badgeClass}">${esc(badgeText)}</span>
+          ${completeBtn}
+        </div>
+      </div>
+    `;
   }).join('');
 }
 
-function setState(text, isError) {
-  els.dashboardState.textContent = text;
-  els.dashboardState.className = 'helper-text ' + (isError ? 'error-text' : '');
+async function completeAssignedTicket(id) {
+  if (!confirm('Xác nhận đánh dấu phiếu này đã hoàn thành?')) return;
+  try {
+    const res = await apiPost('completeAssignedTicket', { id });
+    const item = (assignedTicketsCache || []).find(x => x.id === id);
+    if (item) {
+      item.trangThai = res.trangThai || 'Hoàn thành';
+      item.thoiGianHoanThanh = res.thoiGianHoanThanh || '';
+    }
+    showToast('Đã đánh dấu hoàn thành');
+    renderAssignedTickets(assignedTicketsCache || []);
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  }
 }
 
-function setText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
+function openSupportDetail(maPhieu) {
+  const r = (supportRequestsCache || []).find(x => String(x.maPhieu) === String(maPhieu));
+  if (!r) return;
+
+  document.getElementById('modalTitle').textContent = r.maPhieu || 'Phiếu hỗ trợ';
+  const sheetBadge = document.getElementById('modalSheetBadge');
+  if (sheetBadge) sheetBadge.classList.add('hidden');
+  const badge = document.getElementById('modalStatusBadge');
+  badge.textContent = r.trangThai || 'Đang xử lý';
+  badge.className = (r.trangThai === 'Đã xử lý') ? 'badge badge-green' : 'badge badge-blue';
+
+  const body = document.getElementById('modalBody');
+  const replyHistory = (r.lichSuXuLy && r.lichSuXuLy.length)
+    ? r.lichSuXuLy
+    : (r.ghiChuXuLy ? [{ ghiChu: r.ghiChuXuLy, thoiGian: r.thoiGianXuLy, trangThai: r.trangThai }] : []);
+  const replyMessagesHtml = replyHistory.map(item => `
+    <div class="support-chat-message reply">
+      <span class="support-chat-label">${esc(item.trangThai || 'Đã xử lý')}${item.thoiGian ? ' · ' + esc(item.thoiGian) : ''}</span>
+      ${esc(item.ghiChu || 'Đang xử lý')}
+    </div>
+  `).join('');
+  body.innerHTML = `
+    <div class="modal-section">
+      <h3>THÔNG TIN PHIẾU HỖ TRỢ</h3>
+      <div class="modal-field"><span class="modal-field-label">Mã phiếu</span><span class="modal-field-value">${esc(r.maPhieu)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Loại hỗ trợ</span><span class="modal-field-value">${esc(r.loaiHoTro)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Nơi xử lý</span><span class="modal-field-value">${esc(r.noiXuLy)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Mã YCSC</span><span class="modal-field-value">${esc(r.maYeuCauGoc)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Thời gian tạo phiếu</span><span class="modal-field-value">${esc(formatDateOnly(r.thoiGianTao))}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Trạng thái</span><span class="modal-field-value">${esc(r.trangThai || 'Đang xử lý')}</span></div>
+    </div>
+    <div class="modal-section">
+      <h3>XỬ LÝ PHIẾU</h3>
+      <button type="button" class="support-chat-toggle" onclick="toggleSupportChatHistory(this)">
+        <span>Lịch sử trao đổi (${1 + replyHistory.length})</span>
+        <span class="support-chat-arrow">▼</span>
+      </button>
+      <div class="support-chat-collapse hidden">
+        <div class="support-chat-box">
+          <div class="support-chat-message request">
+            <span class="support-chat-label">Ghi chú yêu cầu</span>
+            ${esc(r.ghiChu || 'Không có ghi chú')}
+          </div>
+          ${replyMessagesHtml}
+        </div>
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Trạng thái xử lý</label>
+        <select id="supportProcessStatus" class="edit-select">
+          <option value="Đã xử lý" ${r.trangThai === 'Đã xử lý' ? 'selected' : ''}>Đã xử lý</option>
+        </select>
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Ghi chú trả lời Lark</label>
+        <textarea id="supportProcessNote" class="edit-textarea" rows="4" placeholder="Nhập ghi chú xử lý...">${esc(r.ghiChuXuLy || '')}</textarea>
+      </div>
+      <button class="save-btn" onclick="completeSupportRequest('${esc(r.maPhieu)}')">Hoàn thành & reply Lark</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
 }
 
-function toDateInput(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return y + '-' + m + '-' + d;
+function toggleSupportChatHistory(btn) {
+  const panel = btn.nextElementSibling;
+  if (!panel) return;
+  panel.classList.toggle('hidden');
+  btn.classList.toggle('open', !panel.classList.contains('hidden'));
 }
 
-function fmtNum(value) {
-  return Number(value || 0).toLocaleString('vi-VN');
+async function completeSupportRequest(maPhieu) {
+  const note = document.getElementById('supportProcessNote').value.trim();
+  const status = document.getElementById('supportProcessStatus').value;
+  try {
+    const res = await apiPost('processSupportRequest', {
+      maPhieu,
+      trangThai: status,
+      ghiChuXuLy: note
+    });
+    const item = (supportRequestsCache || []).find(x => String(x.maPhieu) === String(maPhieu));
+    if (item) {
+      item.trangThai = res.trangThai || status;
+      item.ghiChuXuLy = res.ghiChuXuLy || note || 'Đang xử lý';
+      item.thoiGianXuLy = res.thoiGianXuLy || '';
+      item.lichSuXuLy = res.lichSuXuLy || item.lichSuXuLy || [];
+    }
+    showToast('Đã xử lý và reply Lark');
+    openSupportDetail(maPhieu);
+    renderSupportRequests(supportRequestsCache || []);
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  }
 }
 
-function fmtVnd(value) {
-  return Number(value || 0).toLocaleString('vi-VN') + 'đ';
+
+// ================================================================
+//  SEARCH SUGGEST
+// ================================================================
+
+function doSuggestLocal(q, dropdownId, renderFn) {
+  const qNorm = normalizeKeyword(q);
+  let results = [];
+  SHEETS.forEach(function(s) {
+    (allDataCache[s.name] || []).forEach(function(p) {
+      if (!p.maYeuCau) return;
+      var maNorm = normalizeKeyword(p.maYeuCau);
+      var tenNorm = normalizeKeyword(p.tenHangSuaChua);
+      var imeiNorm = normalizeKeyword(p.imei);
+      if (maNorm.indexOf(qNorm) > -1 || tenNorm.indexOf(qNorm) > -1 || imeiNorm.indexOf(qNorm) > -1) {
+        results.push({ maYeuCau: p.maYeuCau, tenHangSuaChua: p.tenHangSuaChua, imei: p.imei, sheetName: p.sheetName, trangThai: p.trangThaiChinh, ghiChuYCSC: p.ghiChuYCSC, rowIndex: p.rowIndex });
+      }
+    });
+  });
+  results.sort(function(a, b) {
+    return (normalizeKeyword(a.maYeuCau).indexOf(qNorm) === 0 ? 1 : 0) - (normalizeKeyword(b.maYeuCau).indexOf(qNorm) === 0 ? 1 : 0);
+  });
+  results = results.slice(0, 15);
+  renderFn(results);
 }
 
-function formatResponseTime(minutes) {
-  const total = Math.max(0, Math.round(Number(minutes || 0)));
-  if (total <= 0) return '0p';
-  const hours = Math.floor(total / 60);
-  const mins = total % 60;
-  if (hours > 0) return mins ? hours + 'h ' + mins + 'p' : hours + 'h';
-  return total + 'p';
+function doSuggest(q) {
+  // Client-side suggest
+  const qNorm = normalizeKeyword(q);
+  let results = [];
+  const sheetKeys = currentSheet ? [currentSheet] : SHEETS.map(s => s.name);
+
+  sheetKeys.forEach(name => {
+    (allDataCache[name] || []).forEach(p => {
+      if (!p.maYeuCau) return;
+      const maNorm = normalizeKeyword(p.maYeuCau);
+      const tenNorm = normalizeKeyword(p.tenHangSuaChua);
+      const imeiNorm = normalizeKeyword(p.imei);
+      if (maNorm.indexOf(qNorm) > -1 || tenNorm.indexOf(qNorm) > -1 || imeiNorm.indexOf(qNorm) > -1) {
+        results.push(p);
+      }
+    });
+  });
+
+  results.sort((a,b) => {
+    const aMa = normalizeKeyword(a.maYeuCau).indexOf(qNorm) === 0 ? 1 : 0;
+    const bMa = normalizeKeyword(b.maYeuCau).indexOf(qNorm) === 0 ? 1 : 0;
+    return bMa - aMa;
+  });
+  results = results.slice(0, 15);
+
+  const dropdown = document.getElementById('searchDropdown');
+  if (!results.length) {
+    dropdown.innerHTML = '<div class="suggest-empty">Không tìm thấy phiếu nào</div>';
+    dropdown.classList.add('show');
+    return;
+  }
+
+  dropdown.innerHTML = results.map(p => {
+    const badgeClass = TRANG_THAI_COLORS[p.trangThaiChinh] || 'badge-gray';
+    return `<div class="suggest-item" onmousedown="openDetail('${esc(p.sheetName)}','${esc(p.maYeuCau)}')">
+      <div>
+        <div class="suggest-ma">${esc(p.maYeuCau)}</div>
+        <div class="suggest-ten">${esc(p.tenHangSuaChua)}${p.imei ? ' · IMEI: ' + esc(p.imei) : ''}</div>
+      </div>
+      <div class="suggest-right">
+        <span class="badge ${badgeClass}">${esc(p.trangThaiChinh || '')}</span>
+        <span class="suggest-sheet">${esc(p.sheetName)}</span>
+      </div>
+    </div>`;
+  }).join('');
+  dropdown.classList.add('show');
 }
 
-function escapeHtml(str) {
-  return String(str || '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+function hideSearchDropdown() {
+  document.getElementById('searchDropdown').classList.remove('show');
 }
+
+// ================================================================
+//  MODAL DETAIL
+// ================================================================
+async function openDetail(sheetName, maYeuCau) {
+  hideSearchDropdown();
+  document.getElementById('searchInput').value = '';
+
+  if (!sheetName || !maYeuCau) {
+    showToast('Thiếu thông tin phiếu');
+    return;
+  }
+  var cache = allDataCache[sheetName];
+  if (!cache) {
+    showToast('Không tìm thấy dữ liệu kho: ' + sheetName);
+    return;
+  }
+  var phieu = cache.find(function(p) { return p.maYeuCau === maYeuCau; });
+  if (!phieu) {
+    showToast('Không tìm thấy phiếu');
+    return;
+  }
+
+  document.getElementById('modalTitle').textContent = phieu.maYeuCau;
+  const sheetBadge = document.getElementById('modalSheetBadge');
+  if (sheetBadge) {
+    sheetBadge.textContent = phieu.sheetName || sheetName || '';
+    sheetBadge.classList.remove('hidden');
+  }
+
+  const badgeClass = TRANG_THAI_COLORS[phieu.trangThaiChinh] || 'badge-gray';
+  const statusBadge = document.getElementById('modalStatusBadge');
+  statusBadge.textContent = phieu.trangThaiChinh || 'Chưa xử lý';
+  statusBadge.className = 'badge ' + badgeClass;
+
+  const statusConfig = TRANG_THAI_BY_SHEET[phieu.sheetName] || TRANG_THAI_BY_SHEET.DEFAULT;
+  const secondaryStatusList = statusConfig.secondary || TRANG_THAI_BY_SHEET.DEFAULT.secondary;
+  const currentStatus = phieu.trangThaiChinh || 'Chưa xử lý';
+  const currentSecondaryStatus = phieu.trangThaiPhu || '';
+
+  const body = `
+    <div class="modal-section">
+      <p class="modal-section-title">Thông tin phiếu</p>
+      <div class="modal-field"><span class="modal-field-label">Mã yêu cầu</span><span class="modal-field-value">${esc(phieu.maYeuCau)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Tên hàng sửa chữa</span><span class="modal-field-value">${esc(phieu.tenHangSuaChua)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">IMEI</span><span class="modal-field-value">${esc(phieu.imei)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Thời gian tạo</span><span class="modal-field-value">${esc(formatDateOnly(phieu.thoiGianTao))}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Hẹn trả khách</span><span class="modal-field-value">${esc(formatDateShort(phieu.henTraKhach))}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Khách hàng</span><span class="modal-field-value">${esc(phieu.khachHang)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">SĐT</span><span class="modal-field-value">${esc(phieu.sdt)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Ghi chú YCSC</span><span class="modal-field-value">${esc(phieu.ghiChuYCSC)}</span></div>
+      ${(phieu.sheetName === 'Kho thu cũ' || phieu.sheetName === 'Kho nhập hàng')
+        ? `<div class="modal-field"><span class="modal-field-label">Nơi xử lý</span><span class="modal-field-value">${esc(phieu.noiXuLy)}</span></div>
+           <div class="modal-field"><span class="modal-field-label">NCC</span><span class="modal-field-value">${esc(phieu.ncc)}</span></div>
+           <div class="modal-field"><span class="modal-field-label">Ngày gửi</span><span class="modal-field-value">${esc(formatDateShort(phieu.ngayGui))}</span></div>
+           <div class="modal-field"><span class="modal-field-label">Trạng thái</span><span class="modal-field-value">${phieu.hoanThanh ? 'Hoàn thành' : 'Đang xử lý'}</span></div>
+           ${phieu.thoiGianHoanThanh ? `<div class="modal-field"><span class="modal-field-label">Thời gian hoàn thành</span><span class="modal-field-value">${esc(formatDateShort(phieu.thoiGianHoanThanh))}</span></div>` : ''}`
+        : ''}
+      ${(phieu.sheetName === 'CN45' || phieu.sheetName === 'CN141')
+        ? `<div class="modal-field"><span class="modal-field-label">Ngày hoàn thành</span><span class="modal-field-value">${esc(phieu.completedAt || 'Chưa hoàn thành')}</span></div>
+           <div class="modal-field"><span class="modal-field-label">Thời gian sửa chữa</span><span class="modal-field-value">${esc(phieu.repairTime ? phieu.repairTime + ' ngày' : 'Chưa hoàn thành')}</span></div>`
+        : ''}
+    </div>
+
+	    <div class="modal-section">
+	      <p class="modal-section-title">Chỉnh sửa</p>
+
+	      <div class="edit-group">
+	        <label class="edit-label">Ghi chú báo giá khách</label>
+	        <textarea id="editGhiChuBaoGia" class="edit-textarea" rows="2">${esc(phieu.ghiChuBaoGiaKhach)}</textarea>
+	      </div>
+      ${phieu.sheetName === 'Kho thu cũ'
+        ? `<div class="edit-group">
+             <label class="edit-label">Trạng thái cột I</label>
+             <select id="editTrangThaiI" class="edit-select">
+               <option value="">-- Chọn trạng thái --</option>
+               ${secondaryStatusList.map(o => `<option value="${esc(o)}"${o === currentSecondaryStatus ? ' selected' : ''}>${esc(o)}</option>`).join('')}
+             </select>
+           </div>
+           <div class="edit-group">
+             <label class="edit-label">
+               <input type="checkbox" id="editHoanThanh" ${phieu.hoanThanh ? 'checked' : ''} style="margin-right:6px;">
+               Hoàn thành
+             </label>
+           </div>`
+        : ''}
+      ${phieu.sheetName === 'Kho nhập hàng'
+        ? `<div class="edit-group">
+             <label class="edit-label">Trạng thái cột I</label>
+             <select id="editTrangThaiI" class="edit-select">
+               <option value="">-- Chọn trạng thái --</option>
+               ${secondaryStatusList.map(o => `<option value="${esc(o)}"${o === currentSecondaryStatus ? ' selected' : ''}>${esc(o)}</option>`).join('')}
+             </select>
+           </div>`
+        : ''}
+
+      ${(phieu.sheetName !== 'Kho thu cũ' && phieu.sheetName !== 'Kho nhập hàng')
+        ? `<div class="edit-group">
+             <label class="edit-label">Trạng thái cột I</label>
+             <select id="editTrangThaiI" class="edit-select">
+               <option value="">-- Chọn trạng thái --</option>
+               ${secondaryStatusList.map(o => `<option value="${esc(o)}"${o === currentSecondaryStatus ? ' selected' : ''}>${esc(o)}</option>`).join('')}
+             </select>
+           </div>`
+        : ''}
+
+      <button class="save-btn" id="saveBtn" onclick="savePhieu('${esc(phieu.sheetName)}','${esc(phieu.maYeuCau)}',${phieu.rowIndex})">Lưu thay đổi</button>
+      <button class="support-request-btn" onclick="openRequestModal('${esc(phieu.maYeuCau)}','${esc(phieu.sheetName)}')">
+        <span>💬</span>
+        <span>Xin thông tin / hỗ trợ</span>
+      </button>
+    </div>
+    ${renderStatusLogSection(phieu)}
+  `;
+
+  document.getElementById('modalBody').innerHTML = body;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function savePhieu(sheetName, maYeuCau, rowIndex) {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Đang lưu...';
+
+  const sel = document.getElementById('editTrangThaiI')?.value || '';
+
+  const ghiChuBaoGia = document.getElementById('editGhiChuBaoGia')?.value || '';
+
+  const payload = {
+    sheetName,
+    maYeuCau,
+    rowIndex,
+    trangThaiPhu: sel,
+    ghiChuBaoGiaKhach: ghiChuBaoGia,
+  };
+
+  if (sheetName === 'Kho thu cũ') {
+    const hoanThanhEl = document.getElementById('editHoanThanh');
+    if (hoanThanhEl) payload.hoanThanh = hoanThanhEl.checked;
+  } else if (sheetName === 'Kho nhập hàng') {
+    payload.hoanThanh = (sel === 'Hoàn thành');
+  }
+
+  try {
+    const res = await apiPost('update', payload);
+    const resData = res && res.data ? res.data : res;
+
+    if (allDataCache[sheetName]) {
+      const idx = allDataCache[sheetName].findIndex(p => p.maYeuCau === maYeuCau);
+      if (idx > -1) {
+        allDataCache[sheetName][idx].trangThaiPhu = sel;
+        allDataCache[sheetName][idx].ghiChuBaoGiaKhach = ghiChuBaoGia;
+        if (resData && Array.isArray(resData.logTrangThai)) {
+          allDataCache[sheetName][idx].logTrangThai = resData.logTrangThai;
+          allDataCache[sheetName][idx].thoiGianThayDoiTrangThai = resData.thoiGianThayDoiTrangThai || '';
+        }
+        if (payload.hoanThanh !== undefined) {
+          allDataCache[sheetName][idx].hoanThanh = payload.hoanThanh;
+          if (payload.hoanThanh) {
+            const now = new Date();
+            allDataCache[sheetName][idx].thoiGianHoanThanh = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+          }
+        }
+      }
+    }
+
+    showToast('Đã lưu thay đổi!');
+    closeModal();
+    applyFilters();
+  } catch (err) {
+    showToast('Lỗi lưu: ' + (err.message || err));
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Lưu thay đổi';
+  }
+}
+
+// ================================================================
+//  UTILITIES
+// ================================================================
+function showLoading(show) {
+  document.getElementById('loadingState').classList.toggle('hidden', !show);
+  document.getElementById('ticketsWrap').classList.toggle('hidden', show);
+  document.getElementById('emptyState').classList.add('hidden');
+  if (show) startFakeLoading();
+  else finishFakeLoading();
+}
+
+function startFakeLoading() {
+  clearInterval(fakeLoadingTimer);
+  let progress = 0;
+  setLoadingProgress(progress, 'Đang tải dữ liệu...');
+  fakeLoadingTimer = setInterval(() => {
+    if (progress < 60) progress += Math.random() * 8 + 4;
+    else if (progress < 85) progress += Math.random() * 4 + 1.5;
+    else if (progress < 92) progress += Math.random() * 1.2 + 0.3;
+    else progress = 92;
+    setLoadingProgress(progress, 'Đang tải dữ liệu...');
+  }, 180);
+}
+
+function finishFakeLoading() {
+  clearInterval(fakeLoadingTimer);
+  setLoadingProgress(100, 'Hoàn tất');
+}
+
+function setLoadingProgress(percent, text) {
+  const bar = document.getElementById('loadingProgressBar');
+  const label = document.getElementById('loadingProgressText');
+  if (!bar || !label) return;
+  const safePercent = Math.max(0, Math.min(100, Math.round(percent)));
+  bar.style.width = safePercent + '%';
+  label.textContent = (text || 'Đang tải dữ liệu...') + ' ' + safePercent + '%';
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function formatDateShort(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return String(dateStr);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  const hours = String(d.getHours()).padStart(2, '0');
+  const mins = String(d.getMinutes()).padStart(2, '0');
+  return day + '/' + month + '/' + year + ' ' + hours + ':' + mins;
+}
+
+function formatDateOnly(dateStr) {
+  if (!dateStr) return '';
+  const text = String(dateStr).trim();
+  const vnMatch = text.match(/^(\d{1,2}\/\d{1,2}\/\d{4})/);
+  if (vnMatch) return vnMatch[1];
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return text.split(' ')[0] || text;
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return day + '/' + month + '/' + year;
+}
+
+function parseVnDateTime(dateStr) {
+  if (!dateStr) return null;
+  const text = String(dateStr).trim();
+  const m = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?/);
+  if (m) {
+    const d = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]), Number(m[4] || 0), Number(m[5] || 0));
+    return isNaN(d.getTime()) ? null : d;
+  }
+  const d = new Date(text);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function formatDurationMs(ms) {
+  if (!ms || ms < 0) return '0 phút';
+  const totalMins = Math.round(ms / 60000);
+  if (totalMins < 60) return totalMins + ' phút';
+  const hours = Math.floor(totalMins / 60);
+  const mins = totalMins % 60;
+  if (hours < 24) return hours + ' giờ' + (mins ? ' ' + mins + ' phút' : '');
+  const days = Math.floor(hours / 24);
+  const remHours = hours % 24;
+  return days + ' ngày' + (remHours ? ' ' + remHours + ' giờ' : '');
+}
+
+function buildStatusDurationRows(log) {
+  const entries = Array.isArray(log) ? log : [];
+  if (!entries.length) return [];
+  const now = Date.now();
+  return entries.map(function(item, i) {
+    const start = parseVnDateTime(item.at);
+    const end = i + 1 < entries.length ? parseVnDateTime(entries[i + 1].at) : new Date(now);
+    const durationMs = (start && end) ? (end.getTime() - start.getTime()) : 0;
+    return {
+      status: item.status || '',
+      at: item.at || '',
+      durationLabel: i + 1 < entries.length ? formatDurationMs(durationMs) : formatDurationMs(durationMs) + ' (đang)',
+    };
+  });
+}
+
+function renderStatusLogSection(phieu) {
+  const log = Array.isArray(phieu.logTrangThai) ? phieu.logTrangThai : [];
+  if (!log.length) {
+    return `
+      <div class="modal-section">
+        <p class="modal-section-title">Lịch sử thay đổi trạng thái</p>
+        <div class="modal-field"><span class="modal-field-value" style="color:#64748b;">Chưa có lịch sử thay đổi trạng thái</span></div>
+      </div>`;
+  }
+  const rows = buildStatusDurationRows(log);
+  return `
+    <div class="modal-section">
+      <p class="modal-section-title">Lịch sử thay đổi trạng thái</p>
+      ${phieu.thoiGianThayDoiTrangThai ? '<div class="modal-field"><span class="modal-field-label">Đổi gần nhất</span><span class="modal-field-value">' + esc(phieu.thoiGianThayDoiTrangThai) + '</span></div>' : ''}
+      <div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th style="padding:8px 10px;text-align:left;">Trạng thái</th>
+              <th style="padding:8px 10px;text-align:left;">Thời điểm</th>
+              <th style="padding:8px 10px;text-align:left;">Thời lượng</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(r => `
+              <tr style="border-top:1px solid #f1f5f9;">
+                <td style="padding:8px 10px;font-weight:600;">${esc(r.status)}</td>
+                <td style="padding:8px 10px;">${esc(r.at)}</td>
+                <td style="padding:8px 10px;color:#64748b;">${esc(r.durationLabel)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function fmtNum(v) {
+  return Number(v || 0).toLocaleString('vi-VN');
+}
+
+function normalizeKeyword(str) {
+  return String(str || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * HTML escape - bảo vệ chống XSS
+ */
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  const str = String(s);
+  const escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+  return str.replace(/[&<>"'/`=]/g, ch => escapeMap[ch] || ch);
+}
+
+/**
+ * JavaScript string escape - cho dynamic values trong JS
+ */
+function escJs(s) {
+  if (s === null || s === undefined) return '';
+  return JSON.stringify(String(s));
+}
+
+/**
+ * URL escape - cho query parameters
+ */
+function escUrl(s) {
+  if (s === null || s === undefined) return '';
+  return encodeURIComponent(String(s));
+}
+
+function encodePickData(obj) {
+  return escUrl(JSON.stringify(obj));
+}
+
+function decodePickData(str) {
+  return JSON.parse(decodeURIComponent(str));
+}
+
+function bindYCSCDropdownPick(dropdownId, onPick) {
+  const el = document.getElementById(dropdownId);
+  if (!el) return;
+  const handler = function(e) {
+    const item = e.target.closest('.ycsc-search-item[data-pick]');
+    if (!item) return;
+    e.preventDefault();
+    onPick(decodePickData(item.getAttribute('data-pick')));
+  };
+  if (el._pickHandler) {
+    el.removeEventListener('mousedown', el._pickHandler);
+    el.removeEventListener('touchstart', el._pickHandler);
+  }
+  el._pickHandler = handler;
+  el.addEventListener('mousedown', handler);
+  el.addEventListener('touchstart', handler, { passive: false });
+}
+
+function renderYCSCDropdownItem(r, extra) {
+  const pick = encodePickData(Object.assign({
+    maYeuCau: r.maYeuCau,
+    sheetName: r.sheetName || '',
+    tenHangSuaChua: r.tenHangSuaChua || '',
+    ghiChuYCSC: r.ghiChuYCSC || '',
+    imei: r.imei || '',
+    rowIndex: Number(r.rowIndex) || 0,
+  }, extra || {}));
+  return `
+    <div class="ycsc-search-item" data-pick="${pick}">
+      <div>
+        <div style="font-weight:700;font-size:13px;">${esc(r.maYeuCau)}</div>
+        <div style="font-size:12px;color:#64748b;">${esc(r.tenHangSuaChua || '')}${r.imei ? ' · IMEI: ' + esc(r.imei) : ''}</div>
+      </div>
+      <span class="suggest-sheet" style="margin-left:auto;font-size:11px;color:var(--primary-2);font-weight:600;">${esc(r.sheetName || '')}</span>
+    </div>
+  `;
+}
+
+function lookupYCSCByMa(maYeuCau) {
+  buildBuyPartsYCSCIndex();
+  const ma = String(maYeuCau || '').trim();
+  if (!ma) return null;
+  return buyPartsYCSCIndex.find(r => r.maYeuCau === ma) || null;
+}
+
+function resolveGuiHangImei(item) {
+  if (item && item.imei) return String(item.imei).trim();
+  const found = lookupYCSCByMa(item && item.maYeuCau);
+  return found ? (found.imei || '') : '';
+}
+
+function formatGuiHangSubline(tenHang, imei, extra) {
+  let line = esc(tenHang || '');
+  if (imei) line += (line ? ' · ' : '') + 'IMEI: ' + esc(imei);
+  if (extra) line += (line ? ' · ' : '') + esc(extra);
+  return line;
+}
+
+// ================================================================
+// MUA LINH KIEN
+// ================================================================
+let buyPartsData = [];
+let buyPartsSelectedYCSC = []; // [{maYeuCau, tenHangSuaChua, sheetName, rowIndex}]
+let buyPartsYCSCIndex = [];
+let buyPartsYCSCTimer = null;
+let buyPartsCurrentUser = '';
+
+async function loadBuyPartsCurrentUser() {
+  try {
+    if (buyPartsCurrentUser) return buyPartsCurrentUser;
+    const res = await apiCall('getCurrentUser');
+    buyPartsCurrentUser = (res && res.data && res.data.displayName) ? String(res.data.displayName).trim() : '';
+    return buyPartsCurrentUser;
+  } catch (err) {
+    console.error('loadBuyPartsCurrentUser error:', err);
+    return '';
+  }
+}
+
+function buildBuyPartsYCSCIndex() {
+  if (buyPartsYCSCIndex.length) return buyPartsYCSCIndex;
+  const index = [];
+  const seen = new Set();
+  SHEETS.forEach(s => {
+    const rows = allDataCache[s.name] || [];
+    rows.forEach((p, idx) => {
+      const ma = String(p.maYeuCau || '').trim();
+      if (!ma) return;
+      const key = ma + '||' + s.name + '||' + (p.rowIndex || idx);
+      if (seen.has(key)) return;
+      seen.add(key);
+      index.push({
+        maYeuCau: ma,
+        tenHangSuaChua: String(p.tenHangSuaChua || '').trim(),
+        ghiChuYCSC: String(p.ghiChuYCSC || '').trim(),
+        imei: String(p.imei || '').trim(),
+        trangThai: String(p.trangThai || '').trim(),
+        sheetName: s.name,
+        rowIndex: p.rowIndex || (idx + 1),
+        maNorm: normalizeKeyword(ma),
+        maDigits: normalizeKeyword(ma).replace(/\D/g, ''),
+        tenNorm: normalizeKeyword(p.tenHangSuaChua || ''),
+        imeiNorm: normalizeKeyword(p.imei || '').replace(/\D/g, ''),
+      });
+    });
+  });
+  buyPartsYCSCIndex = index;
+  return buyPartsYCSCIndex;
+}
+
+function findBuyPartsYCSCLocal(q) {
+  const qNorm = normalizeKeyword(q);
+  const qDigits = qNorm.replace(/\D/g, '');
+  const index = buildBuyPartsYCSCIndex();
+  const matches = index.filter(r => {
+    if (!qNorm) return false;
+    if (r.maNorm === qNorm) return true;
+    if (r.maNorm.startsWith(qNorm)) return true;
+    if (qDigits && (r.maDigits === qDigits || r.maDigits.endsWith(qDigits) || r.maDigits.includes(qDigits))) return true;
+    if (!qDigits && r.maNorm.includes(qNorm)) return true;
+    return false;
+  });
+  matches.sort((a, b) => {
+    const score = (r) => {
+      if (r.maNorm === qNorm) return 300;
+      if (r.maNorm.startsWith(qNorm)) return 240;
+      if (qDigits && r.maDigits === qDigits) return 220;
+      if (qDigits && r.maDigits.endsWith(qDigits)) return 210;
+      if (qDigits && r.maDigits.includes(qDigits)) return 180;
+      return 100;
+    };
+    return score(b) - score(a) || a.maYeuCau.localeCompare(b.maYeuCau);
+  });
+  return matches.slice(0, 10);
+}
+
+function getBuyPartsStatusClass(status) {
+  const s = String(status || '').trim().toLowerCase();
+  if (s.includes('đang') || s.includes('mua')) return 'buy-parts-status-dang';
+  if (s.includes('nhận') || s.includes('hoàn') || s.includes('xong')) return 'buy-parts-status-nhan';
+  if (s.includes('hủy') || s.includes('từ chối')) return 'buy-parts-status-huy';
+  return 'buy-parts-status-cho';
+}
+
+function getBuyPartsStatusBadge(status) {
+  return '<span class="buy-parts-status ' + getBuyPartsStatusClass(status) + '">' + esc(status || 'Chờ mua') + '</span>';
+}
+
+function showBuyPartsView() {
+  document.getElementById('searchWrap').classList.add('hidden');
+  document.getElementById('filterRow').classList.add('hidden');
+  document.getElementById('kpiToggle').parentElement.classList.add('hidden');
+  const wrap = document.getElementById('ticketsWrap');
+  const empty = document.getElementById('emptyState');
+  const pager = document.getElementById('pagerWrap');
+  if (pager) { pager.classList.add('hidden'); pager.innerHTML = ''; }
+  buyPartsYCSCIndex = [];
+
+  wrap.innerHTML = `
+    <div class="buy-parts-actions">
+      <button class="buy-parts-btn buy-parts-btn-primary" onclick="openBuyPartsModal()">
+        <span>+</span> Mua hàng
+      </button>
+      <button class="buy-parts-btn buy-parts-btn-secondary" onclick="openReceiveModal()">
+        Nhận hàng
+      </button>
+      <button class="buy-parts-btn buy-parts-btn-secondary" onclick="openSendModal()">
+        Gửi hàng
+      </button>
+    </div>
+    <div class="buy-parts-table-wrap">
+      <table class="buy-parts-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>YCSC</th>
+            <th>Kho</th>
+            <th>Model</th>
+            <th>Linh kiện</th>
+            <th>SL</th>
+            <th>NCC đề xuất</th>
+            <th>Người đề xuất</th>
+            <th>Ghi chú</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody id="buyPartsTableBody">
+          <tr><td colspan="11" class="buy-parts-empty">Đang tải...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+  empty.classList.add('hidden');
+  wrap.classList.remove('hidden');
+  loadBuyPartsData();
+}
+
+async function loadBuyPartsData() {
+  try {
+    const res = await apiCall('listMuaLinhKien');
+    buyPartsData = Array.isArray(res) ? res : (res.data || []);
+    renderBuyPartsTable();
+  } catch (err) {
+    showToast('Lỗi tải dữ liệu mua linh kiện: ' + err.message);
+    const tbody = document.getElementById('buyPartsTableBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="11" class="buy-parts-empty">Lỗi tải dữ liệu</td></tr>';
+  }
+}
+
+function renderBuyPartsTable() {
+  const tbody = document.getElementById('buyPartsTableBody');
+  if (!tbody) return;
+  if (!buyPartsData.length) {
+    tbody.innerHTML = '<tr><td colspan="11" class="buy-parts-empty">Chưa có yêu cầu mua linh kiện</td></tr>';
+    return;
+  }
+  // Group by maYeuCau để hiển thị YCSC tags
+  const grouped = {};
+  buyPartsData.forEach(row => {
+    const key = row.maYeuCau + '||' + row.rowIndex;
+    if (!grouped[key]) grouped[key] = { ...row, ycscList: [] };
+    grouped[key].ycscList.push(row.maYeuCau);
+  });
+  const rows = Object.values(grouped);
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td>${esc(formatDateOnly(r.thoiGianTao) || '')}</td>
+      <td><div class="buy-parts-ycsc-tags">${r.ycscList.map(y => '<span class="buy-parts-ycsc-tag" onclick="openDetail(\'' + esc(r.sheetName || '') + '\',\'' + esc(y) + '\')">' + esc(y) + '</span>').join('')}</div></td>
+      <td>${esc(r.khoSuaChua || '')}</td>
+      <td>${esc(r.model || '')}</td>
+      <td>${esc(r.linhKienCanMua || '')}</td>
+      <td>${esc(r.soLuong || '')}</td>
+      <td>${esc(r.nccDeXuat || '')}</td>
+      <td>${esc(r.nguoiDeXuat || '')}</td>
+      <td>${esc(r.ghiChu || '')}</td>
+      <td>${getBuyPartsStatusBadge(r.trangThai)}</td>
+    </tr>
+  `).join('');
+}
+
+function openBuyPartsModal() {
+  document.getElementById('buyPartsModalTitle').textContent = 'Mua hàng';
+  document.getElementById('muaLKModal').classList.remove('receive-full');
+  document.getElementById('buyPartsModalBody').innerHTML = `
+    <div class="modal-section">
+      <p class="modal-section-title">YCSC</p>
+      <div class="ycsc-search-wrap">
+        <label class="edit-label">Mã YCSC (không bắt buộc)</label>
+        <input id="buyPartsYCSCSearch" class="ycsc-search-input" type="text" placeholder="Nhập mã YCSC để tìm và chọn, hoặc bỏ trống..." autocomplete="off">
+        <div id="buyPartsYCSCDropdown" class="ycsc-search-dropdown"></div>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="edit-group">
+        <label class="edit-label">Kho sửa chữa</label>
+        <input id="buyPartsWarehouse" class="edit-input" type="text" placeholder="VD: CN45, CN141...">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Model</label>
+        <input id="buyPartsModel" class="edit-input" type="text" placeholder="Model sản phẩm">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Linh kiện cần mua</label>
+        <input id="buyPartsPartName" class="edit-input" type="text" placeholder="Tên linh kiện cần mua">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Số lượng</label>
+        <input id="buyPartsQuantity" class="edit-input" type="number" value="1" min="1">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">NCC đề xuất</label>
+        <input id="buyPartsSupplier" class="edit-input" type="text" placeholder="Nhà cung cấp đề xuất">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Người đề xuất</label>
+        <input id="buyPartsRequester" class="edit-input" type="text" placeholder="Tên người đề xuất">
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Ghi chú</label>
+        <textarea id="buyPartsNote" class="edit-textarea" rows="2" placeholder="Ghi chú thêm..."></textarea>
+      </div>
+    </div>
+    <button class="save-btn" id="buyPartsSubmitBtn" onclick="submitBuyParts()">Gửi yêu cầu mua hàng</button>
+  `;
+  document.getElementById('muaLKModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  loadBuyPartsCurrentUser().then((name) => {
+    const requesterInput = document.getElementById('buyPartsRequester');
+    if (requesterInput && !requesterInput.value.trim() && name) requesterInput.value = name;
+  });
+
+  buildBuyPartsYCSCIndex();
+
+  const searchInput = document.getElementById('buyPartsYCSCSearch');
+  const dropdown = document.getElementById('buyPartsYCSCDropdown');
+  const triggerYCSCSearch = (sourceValue) => {
+    clearTimeout(buyPartsYCSCTimer);
+    const q = String(sourceValue || '').trim();
+    if (searchInput) searchInput.value = q;
+    if (!dropdown) return;
+    if (q.length < 1) {
+      hideBuyPartsYCSCDropdown();
+      return;
+    }
+    const local = findBuyPartsYCSCLocal(q);
+    if (local.length) {
+      renderBuyPartsYCSCDropdown(local);
+      return;
+    }
+    buyPartsYCSCTimer = setTimeout(() => doBuyPartsYCSCSearch(q), 80);
+  };
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      searchInput.dataset.selectedYcsc = '';
+      triggerYCSCSearch(searchInput.value);
+    });
+    searchInput.addEventListener('blur', () => setTimeout(hideBuyPartsYCSCDropdown, 200));
+    searchInput.addEventListener('focus', () => {
+      const q = searchInput.value.trim();
+      if (q.length >= 1) triggerYCSCSearch(q);
+    });
+  }
+
+}
+
+let selectedReceiveYCSC = [];
+let sentGuiHangCache = [];
+let guiHangAllCache = [];
+let guiHangBlockedMaSet = new Set();
+let guiHangCacheReady = false;
+let guiHangLoadPromise = null;
+
+function rebuildGuiHangMaSets() {
+  guiHangBlockedMaSet = new Set();
+  sentGuiHangCache = [];
+  guiHangAllCache.forEach(function(item) {
+    var ma = String(item.maYeuCau || '').trim();
+    if (!ma) return;
+    var st = String(item.trangThai || 'Đã gửi').trim();
+    if (st === 'Đã nhận' || st === 'Đã gửi') guiHangBlockedMaSet.add(ma);
+    if (st === 'Đã gửi') sentGuiHangCache.push(item);
+  });
+}
+
+async function loadGuiHangCache() {
+  try {
+    var res = await apiCall('listGuiHang', {});
+    guiHangAllCache = Array.isArray(res) ? res : (res.data || []);
+    rebuildGuiHangMaSets();
+    guiHangCacheReady = true;
+  } catch (err) {
+    console.error('loadGuiHangCache error:', err);
+    throw err;
+  }
+}
+
+function ensureGuiHangCache() {
+  if (guiHangCacheReady) return Promise.resolve();
+  if (!guiHangLoadPromise) {
+    guiHangLoadPromise = loadGuiHangCache().catch(function(err) {
+      guiHangLoadPromise = null;
+      throw err;
+    });
+  }
+  return guiHangLoadPromise;
+}
+
+let guiHangRefreshPromise = null;
+
+function refreshGuiHangCache() {
+  if (!guiHangRefreshPromise) {
+    guiHangRefreshPromise = loadGuiHangCache().finally(function() {
+      guiHangRefreshPromise = null;
+    });
+  }
+  return guiHangRefreshPromise;
+}
+
+function findSendYCSCLocal(q) {
+  var selectedMas = {};
+  selectedSendYCSC.forEach(function(x) { selectedMas[x.maYeuCau] = true; });
+  return findBuyPartsYCSCLocal(q).filter(function(r) {
+    return !selectedMas[r.maYeuCau] && !guiHangBlockedMaSet.has(r.maYeuCau);
+  });
+}
+
+function openReceiveModal() {
+  selectedReceiveYCSC = [];
+  document.getElementById('buyPartsModalTitle').textContent = 'Nhận hàng YCSC';
+  document.getElementById('muaLKModal').classList.add('receive-full');
+  document.getElementById('buyPartsModalBody').innerHTML = `
+    <div class="modal-section receive-search-section">
+      <p class="modal-section-title">Phiếu đã gửi</p>
+      <div class="ycsc-search-wrap">
+        <input id="receiveYCSCSearch" class="ycsc-search-input" type="text" placeholder="Lọc theo mã YCSC, IMEI, tên hàng, kho..." autocomplete="off">
+      </div>
+      <div id="receiveSentList" class="ycsc-search-dropdown" style="position:static;display:block;margin-top:6px;max-height:min(280px,45vh);"></div>
+    </div>
+    <div class="receive-content-scroll">
+      <div id="receiveSelectedList"></div>
+      <div class="modal-section" id="receiveFormSection" style="display:none;">
+        <p class="modal-section-title">Thông tin nhận hàng</p>
+        <div id="receiveFormFields"></div>
+        <button class="save-btn" id="receiveSubmitBtn" onclick="submitReceive()">Lưu nhận hàng</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('muaLKModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const searchInput = document.getElementById('receiveYCSCSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      renderSentGuiHangList(this.value.trim());
+    });
+  }
+  bindYCSCDropdownPick('receiveSentList', function(data) {
+    addReceiveFromSent(data);
+  });
+  const getReceiveQuery = function() {
+    return document.getElementById('receiveYCSCSearch')?.value.trim() || '';
+  };
+  const listEl = document.getElementById('receiveSentList');
+  if (guiHangCacheReady) {
+    renderSentGuiHangList('');
+  } else if (listEl) {
+    listEl.innerHTML = '<div class="suggest-empty">Đang tải...</div>';
+  }
+  refreshGuiHangCache().then(function() {
+    if (document.getElementById('receiveSentList')) {
+      renderSentGuiHangList(getReceiveQuery());
+    }
+  }).catch(function(err) {
+    if (listEl && !guiHangCacheReady) {
+      listEl.innerHTML = '<div class="suggest-empty">Lỗi tải danh sách: ' + esc(err.message) + '</div>';
+    }
+  });
+}
+
+function renderSentGuiHangList(q) {
+  const listEl = document.getElementById('receiveSentList');
+  if (!listEl) return;
+  const qNorm = q ? normalizeKeyword(q) : '';
+  let list = sentGuiHangCache.filter(function(item) {
+    if (selectedReceiveYCSC.find(x => x.guiHangRowIndex === item.rowIndex)) return false;
+    if (!qNorm) return true;
+    const hay = normalizeKeyword(item.maYeuCau) + ' ' +
+      normalizeKeyword(item.tenHangSuaChua) + ' ' +
+      normalizeKeyword(item.kho || item.sheetName || '') + ' ' +
+      normalizeKeyword(item.noiGuiNhan || '') + ' ' +
+      normalizeKeyword(resolveGuiHangImei(item));
+    return hay.indexOf(qNorm) > -1;
+  });
+  if (!list.length) {
+    listEl.innerHTML = '<div class="suggest-empty">' + (sentGuiHangCache.length ? 'Không còn phiếu phù hợp' : 'Chưa có phiếu Đã gửi') + '</div>';
+    return;
+  }
+  listEl.innerHTML = list.map(function(item) {
+    const imei = resolveGuiHangImei(item);
+    const pick = encodePickData({
+      guiHangRowIndex: item.rowIndex,
+      maYeuCau: item.maYeuCau,
+      sheetName: item.kho || item.sheetName || '',
+      tenHangSuaChua: item.tenHangSuaChua || '',
+      ghiChuYCSC: item.ghiChuYCSC || '',
+      ghiChuSuaChua: item.ghiChuSuaChua || '',
+      giaTien: item.giaTien || '',
+      noiGuiNhan: item.noiGuiNhan || '',
+      nguoiGui: item.nguoiGui || '',
+      thoiGianGui: item.thoiGianGui || '',
+      imei: imei,
+    });
+    return `
+      <div class="ycsc-search-item" data-pick="${pick}">
+        <div>
+          <div style="font-weight:700;font-size:13px;">${esc(item.maYeuCau)}</div>
+          <div style="font-size:12px;color:#64748b;">${formatGuiHangSubline(item.tenHangSuaChua, imei, item.thoiGianGui ? String(item.thoiGianGui) : '')}</div>
+        </div>
+        <span class="suggest-sheet" style="margin-left:auto;font-size:11px;color:var(--primary-2);font-weight:600;">${esc(item.kho || item.sheetName || '')}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function addReceiveFromSent(data) {
+  if (!data || !data.guiHangRowIndex) return;
+  if (selectedReceiveYCSC.find(x => x.guiHangRowIndex === data.guiHangRowIndex)) return;
+  selectedReceiveYCSC.push({
+    guiHangRowIndex: data.guiHangRowIndex,
+    maYeuCau: data.maYeuCau,
+    sheetName: data.sheetName,
+    tenHangSuaChua: data.tenHangSuaChua,
+    ghiChuYCSC: data.ghiChuYCSC || '',
+    ghiChuSuaChua: data.ghiChuSuaChua || '',
+    giaTien: data.giaTien || '',
+    noiGuiNhan: data.noiGuiNhan || '',
+    nguoiGui: data.nguoiGui || '',
+    thoiGianGui: data.thoiGianGui || '',
+    imei: data.imei || resolveGuiHangImei(data),
+  });
+  renderReceiveSelected();
+  renderSentGuiHangList(document.getElementById('receiveYCSCSearch')?.value.trim() || '');
+}
+
+function removeReceiveYCSC(maYeuCau) {
+  selectedReceiveYCSC = selectedReceiveYCSC.filter(x => x.maYeuCau !== maYeuCau);
+  renderReceiveSelected();
+  renderSentGuiHangList(document.getElementById('receiveYCSCSearch')?.value.trim() || '');
+}
+
+function renderReceiveSelected() {
+  const listEl = document.getElementById('receiveSelectedList');
+  const formSection = document.getElementById('receiveFormSection');
+  if (!listEl) return;
+
+  listEl.innerHTML = selectedReceiveYCSC.map(x => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f1f5f9;border-radius:6px;margin-bottom:4px;">
+      <div>
+        <span style="font-weight:700;font-size:13px;">${esc(x.maYeuCau)}</span>
+        <span style="font-size:12px;color:#64748b;margin-left:8px;">${formatGuiHangSubline(x.tenHangSuaChua, x.imei || resolveGuiHangImei(x), x.sheetName)}</span>
+      </div>
+      <button type="button" style="background:none;border:none;cursor:pointer;color:#dc2626;font-size:18px;" onclick="removeReceiveYCSC('${esc(x.maYeuCau)}')">&times;</button>
+    </div>
+  `).join('');
+
+  if (selectedReceiveYCSC.length > 0) {
+    if (formSection) formSection.style.display = '';
+    renderReceiveFormFields();
+  } else {
+    if (formSection) formSection.style.display = 'none';
+  }
+}
+
+function renderReceiveFormFields() {
+  const fieldsEl = document.getElementById('receiveFormFields');
+  if (!fieldsEl) return;
+  fieldsEl.innerHTML = selectedReceiveYCSC.map((x, i) => `
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:12px;background:#fafafa;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:#1e3a8a;">${esc(x.maYeuCau)}</div>
+      <div class="modal-field"><span class="modal-field-label">Kho</span><span class="modal-field-value">${esc(x.sheetName)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Tên hàng sửa chữa</span><span class="modal-field-value">${esc(x.tenHangSuaChua)}</span></div>
+      ${(x.imei || resolveGuiHangImei(x)) ? '<div class="modal-field"><span class="modal-field-label">IMEI</span><span class="modal-field-value">' + esc(x.imei || resolveGuiHangImei(x)) + '</span></div>' : ''}
+      <div class="modal-field"><span class="modal-field-label">Ghi chú YCSC</span><span class="modal-field-value">${esc(x.ghiChuYCSC || '')}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Nơi gửi/nhận</span><span class="modal-field-value">${esc(x.noiGuiNhan || '')}</span></div>
+      ${x.thoiGianGui ? '<div class="modal-field"><span class="modal-field-label">Thời gian gửi</span><span class="modal-field-value">' + esc(String(x.thoiGianGui)) + '</span></div>' : ''}
+      <div class="edit-group">
+        <label class="edit-label">Ghi chú sửa chữa</label>
+        <textarea id="receiveGhiChu_${i}" class="edit-textarea" rows="2" placeholder="Cập nhật ghi chú sửa chữa...">${esc(x.ghiChuSuaChua || '')}</textarea>
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Giá tiền</label>
+        <input id="receiveGia_${i}" class="edit-input" type="text" placeholder="Cập nhật giá tiền..." value="${esc(x.giaTien || '')}">
+      </div>
+    </div>
+    `).join('');
+}
+
+async function submitReceive() {
+  const items = selectedReceiveYCSC.map((x, i) => ({
+    guiHangRowIndex: x.guiHangRowIndex,
+    maYeuCau: x.maYeuCau,
+    sheetName: x.sheetName,
+    tenHangSuaChua: x.tenHangSuaChua,
+    ghiChuYCSC: x.ghiChuYCSC || '',
+    ghiChuSuaChua: document.getElementById('receiveGhiChu_' + i)?.value || '',
+    giaTien: document.getElementById('receiveGia_' + i)?.value || '',
+    noiGuiNhan: x.noiGuiNhan || '',
+  }));
+  const noiNhanLark = selectedReceiveYCSC.map(x => x.noiGuiNhan || '').filter(Boolean)[0] || '';
+
+  const submitBtn = document.getElementById('receiveSubmitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Đang lưu...';
+  try {
+    await apiPost('receiveGuiHang', { items });
+    items.forEach(function(it) {
+      guiHangBlockedMaSet.add(it.maYeuCau);
+      sentGuiHangCache = sentGuiHangCache.filter(function(x) { return x.rowIndex !== it.guiHangRowIndex; });
+      guiHangAllCache.forEach(function(x) {
+        if (x.rowIndex === it.guiHangRowIndex) x.trangThai = 'Đã nhận';
+      });
+    });
+    closeMuaLKModal();
+    showToast('Đã lưu nhận hàng!');
+    fireGuiHangLark_('receive', items, noiNhanLark);
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Lưu nhận hàng';
+  }
+}
+
+let selectedSendYCSC = [];
+
+function openSendModal() {
+  selectedSendYCSC = [];
+  document.getElementById('buyPartsModalTitle').textContent = 'Gửi hàng YCSC';
+  document.getElementById('muaLKModal').classList.add('receive-full');
+  document.getElementById('buyPartsModalBody').innerHTML = `
+    <div class="modal-section receive-search-section">
+      <p class="modal-section-title">Tìm YCSC</p>
+      <div class="ycsc-search-wrap">
+        <div class="ycsc-search-row">
+          <input id="sendYCSCSearch" class="ycsc-search-input" type="text" placeholder="Nhập mã YCSC, IMEI để tìm..." autocomplete="off">
+          <button type="button" class="ycsc-add-btn" id="sendManualToggleBtn" title="Thêm phiếu thủ công">+</button>
+        </div>
+        <div id="sendYCSCDropdown" class="ycsc-search-dropdown"></div>
+        <div id="sendManualForm" class="send-manual-form hidden">
+          <p class="modal-section-title" style="margin-bottom:8px;">Thêm phiếu thủ công</p>
+          <div class="edit-group">
+            <label class="edit-label">Mã YCSC</label>
+            <input id="sendManualMa" class="edit-input" type="text" placeholder="VD: YCSC006262">
+          </div>
+          <div class="edit-group">
+            <label class="edit-label">Kho</label>
+            <input id="sendManualKho" class="edit-input" type="text" placeholder="VD: CN45">
+          </div>
+          <div class="edit-group">
+            <label class="edit-label">Tên hàng sửa chữa</label>
+            <input id="sendManualTen" class="edit-input" type="text" placeholder="Tên hàng / model">
+          </div>
+          <div class="edit-group">
+            <label class="edit-label">IMEI</label>
+            <input id="sendManualImei" class="edit-input" type="text" placeholder="IMEI thiết bị">
+          </div>
+          <div class="edit-group">
+            <label class="edit-label">Ghi chú YCSC</label>
+            <textarea id="sendManualGhiChu" class="edit-textarea" rows="2" placeholder="Ghi chú (tuỳ chọn)"></textarea>
+          </div>
+          <button type="button" class="tab-btn" style="border-color:var(--success);color:var(--success);" onclick="confirmSendManualEntry()">Thêm vào danh sách</button>
+        </div>
+      </div>
+    </div>
+    <div class="receive-content-scroll">
+      <div id="sendSelectedList"></div>
+      <div class="modal-section" id="sendFormSection" style="display:none;">
+        <p class="modal-section-title">Thông tin gửi hàng</p>
+        <div id="sendFormFields"></div>
+        <button class="save-btn" id="sendSubmitBtn" onclick="submitSend()">Lưu gửi hàng</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('muaLKModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  buildBuyPartsYCSCIndex();
+  const manualToggleBtn = document.getElementById('sendManualToggleBtn');
+  if (manualToggleBtn) {
+    manualToggleBtn.addEventListener('click', toggleSendManualForm);
+  }
+  const searchInput = document.getElementById('sendYCSCSearch');
+  const sendDropdown = document.getElementById('sendYCSCDropdown');
+  const triggerSendSearch = function(sourceValue) {
+    const q = String(sourceValue || '').trim();
+    if (!sendDropdown) return;
+    if (q.length < 1) {
+      sendDropdown.classList.remove('show');
+      return;
+    }
+    renderSendYCSCDropdown(findSendYCSCLocal(q));
+  };
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      triggerSendSearch(this.value);
+    });
+    searchInput.addEventListener('blur', () => setTimeout(() => {
+      if (sendDropdown) sendDropdown.classList.remove('show');
+    }, 200));
+    searchInput.addEventListener('focus', function() {
+      triggerSendSearch(this.value);
+    });
+  }
+  bindYCSCDropdownPick('sendYCSCDropdown', function(data) {
+    addSendYCSC(data);
+  });
+}
+
+function toggleSendManualForm() {
+  const form = document.getElementById('sendManualForm');
+  if (!form) return;
+  form.classList.toggle('hidden');
+}
+
+function confirmSendManualEntry() {
+  const maYeuCau = document.getElementById('sendManualMa')?.value.trim() || '';
+  if (!maYeuCau) {
+    showToast('Vui lòng nhập mã YCSC');
+    return;
+  }
+  addSendYCSC({
+    maYeuCau: maYeuCau,
+    sheetName: document.getElementById('sendManualKho')?.value.trim() || '',
+    tenHangSuaChua: document.getElementById('sendManualTen')?.value.trim() || '',
+    imei: document.getElementById('sendManualImei')?.value.trim() || '',
+    ghiChuYCSC: document.getElementById('sendManualGhiChu')?.value.trim() || '',
+    rowIndex: 0,
+    manual: true,
+  });
+  ['sendManualMa', 'sendManualKho', 'sendManualTen', 'sendManualImei', 'sendManualGhiChu'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const form = document.getElementById('sendManualForm');
+  if (form) form.classList.add('hidden');
+}
+
+function renderSendYCSCDropdown(items) {
+  const dropdown = document.getElementById('sendYCSCDropdown');
+  if (!dropdown) return;
+  if (!items || !items.length) {
+    dropdown.innerHTML = '<div class="suggest-empty">Không tìm thấy YCSC</div>';
+    dropdown.classList.add('show');
+    return;
+  }
+  dropdown.innerHTML = items.map(r => renderYCSCDropdownItem(r)).join('');
+  dropdown.classList.add('show');
+}
+
+function addSendYCSC(data) {
+  const maYeuCau = String((data && data.maYeuCau) || '').trim();
+  if (!maYeuCau) return;
+  if (guiHangBlockedMaSet.has(maYeuCau)) {
+    showToast('YCSC ' + maYeuCau + ' đã được gửi hoặc nhận');
+    return;
+  }
+  if (selectedSendYCSC.find(x => x.maYeuCau === maYeuCau)) return;
+  const found = lookupYCSCByMa(maYeuCau);
+  selectedSendYCSC.push({
+    maYeuCau: maYeuCau,
+    sheetName: data.sheetName || (found && found.sheetName) || '',
+    tenHangSuaChua: data.tenHangSuaChua || (found && found.tenHangSuaChua) || '',
+    ghiChuYCSC: data.ghiChuYCSC || (found && found.ghiChuYCSC) || '',
+    imei: data.imei || (found && found.imei) || '',
+    rowIndex: Number(data.rowIndex) || (found && found.rowIndex) || 0,
+    manual: !!data.manual,
+  });
+  renderSendSelected();
+  const dropdown = document.getElementById('sendYCSCDropdown');
+  if (dropdown) dropdown.classList.remove('show');
+  const searchInput = document.getElementById('sendYCSCSearch');
+  if (searchInput) searchInput.value = '';
+}
+
+function removeSendYCSC(maYeuCau) {
+  selectedSendYCSC = selectedSendYCSC.filter(x => x.maYeuCau !== maYeuCau);
+  renderSendSelected();
+}
+
+function renderSendSelected() {
+  const listEl = document.getElementById('sendSelectedList');
+  const formSection = document.getElementById('sendFormSection');
+  if (!listEl) return;
+
+  listEl.innerHTML = selectedSendYCSC.map(x => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f1f5f9;border-radius:6px;margin-bottom:4px;">
+      <div>
+        <span style="font-weight:700;font-size:13px;">${esc(x.maYeuCau)}</span>
+        <span style="font-size:12px;color:#64748b;margin-left:8px;">${formatGuiHangSubline(x.tenHangSuaChua, x.imei, x.sheetName)}${x.manual ? ' · Thủ công' : ''}</span>
+      </div>
+      <button type="button" style="background:none;border:none;cursor:pointer;color:#dc2626;font-size:18px;" onclick="removeSendYCSC('${esc(x.maYeuCau)}')">&times;</button>
+    </div>
+  `).join('');
+
+  if (selectedSendYCSC.length > 0) {
+    if (formSection) formSection.style.display = '';
+    renderSendFormFields();
+  } else {
+    if (formSection) formSection.style.display = 'none';
+  }
+}
+
+function renderSendFormFields() {
+  const fieldsEl = document.getElementById('sendFormFields');
+  if (!fieldsEl) return;
+  fieldsEl.innerHTML = `
+    <div class="edit-group">
+      <label class="edit-label">Nơi gửi (chung)</label>
+      <input id="sendNoiGuiChung" class="edit-input" type="text" placeholder="Nhập nơi gửi chung cho tất cả YCSC...">
+    </div>
+    ${selectedSendYCSC.map((x, i) => `
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:12px;background:#fafafa;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:#1e3a8a;">${esc(x.maYeuCau)}</div>
+      <div class="modal-field"><span class="modal-field-label">Kho</span><span class="modal-field-value">${esc(x.sheetName)}</span></div>
+      <div class="modal-field"><span class="modal-field-label">Tên hàng sửa chữa</span><span class="modal-field-value">${esc(x.tenHangSuaChua)}</span></div>
+      ${x.imei ? '<div class="modal-field"><span class="modal-field-label">IMEI</span><span class="modal-field-value">' + esc(x.imei) + '</span></div>' : ''}
+      <div class="modal-field"><span class="modal-field-label">Ghi chú YCSC</span><span class="modal-field-value">${esc(x.ghiChuYCSC || '')}</span></div>
+      <div class="edit-group">
+        <label class="edit-label">Ghi chú sửa chữa</label>
+        <textarea id="sendGhiChu_${i}" class="edit-textarea" rows="2" placeholder="Ghi chú..."></textarea>
+      </div>
+      <div class="edit-group">
+        <label class="edit-label">Giá tiền</label>
+        <input id="sendGia_${i}" class="edit-input" type="text" placeholder="Nhập giá tiền...">
+      </div>
+    </div>
+    `).join('')}
+  `;
+}
+
+async function submitSend() {
+  const noiGui = document.getElementById('sendNoiGuiChung')?.value || '';
+  const items = selectedSendYCSC.map((x, i) => ({
+    maYeuCau: x.maYeuCau,
+    sheetName: x.sheetName,
+    tenHangSuaChua: x.tenHangSuaChua,
+    ghiChuYCSC: x.ghiChuYCSC || '',
+    ghiChuSuaChua: document.getElementById('sendGhiChu_' + i)?.value || '',
+    giaTien: document.getElementById('sendGia_' + i)?.value || '',
+    imei: x.imei || '',
+    noiGui: noiGui,
+    noiNhan: noiGui,
+  }));
+
+  const submitBtn = document.getElementById('sendSubmitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Đang lưu...';
+  try {
+    await apiPost('createGuiHang', { items });
+    items.forEach(function(it) { guiHangBlockedMaSet.add(it.maYeuCau); });
+    loadGuiHangCache().catch(function() {});
+    closeMuaLKModal();
+    showToast('Đã lưu gửi hàng!');
+    applyFilters();
+    fireGuiHangLark_('send', items, noiGui);
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Lưu gửi hàng';
+  }
+}
+
+function renderBuyPartsYCSCDropdown(items) {
+  const dropdown = document.getElementById('buyPartsYCSCDropdown');
+  if (!dropdown) return;
+  if (!items || !items.length) {
+    dropdown.innerHTML = '<div class="suggest-empty">Không tìm thấy YCSC</div>';
+    dropdown.classList.add('show');
+    return;
+  }
+  dropdown.innerHTML = items.map(r => `
+    <div class="ycsc-search-item" onclick="chooseBuyPartsYCSC('${esc(r.maYeuCau)}','${esc(r.sheetName || '')}','${esc(r.tenHangSuaChua || '')}')">
+      <div>
+        <div style="font-weight:700;font-size:13px;">${esc(r.maYeuCau)}</div>
+        <div style="font-size:12px;color:#64748b;">${esc(r.tenHangSuaChua || '')}${r.imei ? ' · IMEI: ' + esc(r.imei) : ''}</div>
+      </div>
+      <span class="suggest-sheet" style="margin-left:auto;font-size:11px;color:var(--primary-2);font-weight:600;">${esc(r.sheetName || '')}</span>
+    </div>
+  `).join('');
+  dropdown.classList.add('show');
+}
+
+async function doBuyPartsYCSCSearch(q) {
+  try {
+    const res = await apiCall('suggestYCSC', { q });
+    const results = Array.isArray(res) ? res : (res && Array.isArray(res.data) ? res.data : []);
+    const manualInput = document.getElementById('buyPartsYCSCManual');
+    const qNorm = normalizeKeyword(q);
+    const qDigits = qNorm.replace(/\D/g, '');
+    const currentValue = normalizeKeyword(manualInput ? manualInput.value : '');
+    const filtered = results.filter(r => {
+      const maNorm = normalizeKeyword(r.maYeuCau);
+      const maDigits = maNorm.replace(/\D/g, '');
+      return maNorm !== currentValue && (
+        maNorm === qNorm ||
+        maNorm.startsWith(qNorm) ||
+        (qDigits && (maDigits === qDigits || maDigits.endsWith(qDigits) || maDigits.includes(qDigits))) ||
+        (!qDigits && maNorm.includes(qNorm))
+      );
+    });
+    renderBuyPartsYCSCDropdown(filtered);
+  } catch (err) {
+    console.error('YCSC search error:', err);
+    const dropdown = document.getElementById('buyPartsYCSCDropdown');
+    if (dropdown) {
+      dropdown.innerHTML = '<div class="suggest-empty">Lỗi tải gợi ý</div>';
+      dropdown.classList.add('show');
+    }
+  }
+}
+
+async function chooseBuyPartsYCSC(maYeuCau, sheetName, tenHangSuaChua) {
+  const warehouseInput = document.getElementById('buyPartsWarehouse');
+  const modelInput = document.getElementById('buyPartsModel');
+  const requesterInput = document.getElementById('buyPartsRequester');
+  const searchInput = document.getElementById('buyPartsYCSCSearch');
+  if (warehouseInput && !warehouseInput.value.trim()) warehouseInput.value = sheetName || '';
+  if (modelInput && tenHangSuaChua && !modelInput.value.trim()) modelInput.value = tenHangSuaChua;
+  if (requesterInput && !requesterInput.value.trim()) {
+    const currentUser = await loadBuyPartsCurrentUser();
+    if (currentUser) requesterInput.value = currentUser;
+  }
+  if (searchInput) {
+    searchInput.value = maYeuCau || '';
+    searchInput.dataset.selectedYcsc = maYeuCau || '';
+  }
+  hideBuyPartsYCSCDropdown();
+}
+
+function hideBuyPartsYCSCDropdown() {
+  const dd = document.getElementById('buyPartsYCSCDropdown');
+  if (dd) dd.classList.remove('show');
+}
+
+async function submitBuyParts() {
+  const searchInput = document.getElementById('buyPartsYCSCSearch');
+  const maYeuCau = (searchInput?.dataset.selectedYcsc || searchInput?.value || '').trim();
+  const kho = document.getElementById('buyPartsWarehouse')?.value.trim() || '';
+  const model = document.getElementById('buyPartsModel')?.value.trim() || '';
+  const linhKien = document.getElementById('buyPartsPartName')?.value.trim() || '';
+  const soLuong = parseInt(document.getElementById('buyPartsQuantity')?.value) || 1;
+  const ncc = document.getElementById('buyPartsSupplier')?.value.trim() || '';
+  const nguoi = document.getElementById('buyPartsRequester')?.value.trim() || '';
+  const ghiChu = document.getElementById('buyPartsNote')?.value.trim() || '';
+
+  if (!linhKien) { showToast('Vui lòng nhập linh kiện cần mua'); return; }
+
+  const btn = document.getElementById('buyPartsSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Đang tạo...';
+  try {
+    const items = [{
+      maYeuCau: maYeuCau,
+      khoSuaChua: kho,
+      model: model,
+      linhKienCanMua: linhKien,
+      soLuong: soLuong,
+      nccDeXuat: ncc,
+      nguoiDeXuat: nguoi,
+      ghiChu: ghiChu,
+    }];
+    await apiPost('createMuaLinhKien', { items });
+    showToast('Đã tạo yêu cầu mua linh kiện');
+    closeMuaLKModal();
+    loadBuyPartsData();
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Gửi yêu cầu mua hàng';
+  }
+}
+
+function closeMuaLKModal() {
+  document.getElementById('muaLKModal').classList.remove('open');
+  document.getElementById('muaLKModal').classList.remove('receive-full');
+  document.body.style.overflow = '';
+}
+
+// Bind modal close
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtn = document.getElementById('muaLKModalClose');
+  if (closeBtn) closeBtn.addEventListener('click', closeMuaLKModal);
+  const overlay = document.getElementById('muaLKModal');
+  if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) closeMuaLKModal(); });
+});
+
 </script>
+
+<!-- Chat Bubble -->
+<button id="chatBubble" class="chat-bubble" type="button" title="Giao việc">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z" fill="currentColor"/>
+  </svg>
+</button>
+
+<!-- Giao việc Modal -->
+<div id="chatModal" class="modal-overlay">
+  <div class="chat-modal-content" style="max-width:680px;">
+    <div class="chat-modal-header">
+      <h3>📌 Giao việc</h3>
+      <button id="closeChatModal" class="chat-close-btn" type="button">×</button>
+    </div>
+
+    <div class="chat-modal-body">
+      <!-- Search bar -->
+      <div class="modal-field">
+        <label style="font-size:12px;font-weight:700;color:#334155;">Tìm phiếu (mã YCSC / IMEI / tên hàng)</label>
+        <input id="assignSearchInput" type="text" placeholder="Gõ để lọc trong danh sách bên dưới..." style="width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin-top:6px;">
+      </div>
+
+      <!-- Counter + danh sách phiếu chưa hoàn thành -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:14px 0 6px;">
+        <div style="font-size:12px;font-weight:700;color:#334155;">
+          Phiếu chưa hoàn thành <span id="assignCount" style="color:#64748b;font-weight:600;">(0)</span>
+        </div>
+        <div style="font-size:12px;color:#2563eb;font-weight:700;">
+          Đã chọn: <span id="assignSelectedCount">0</span>
+        </div>
+      </div>
+      <div id="assignTicketList" style="max-height:280px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:10px;background:#f8fafc;"></div>
+
+      <!-- Người nhận -->
+      <div class="modal-field" style="margin-top:16px">
+        <label style="font-size:12px;font-weight:700;color:#334155;">Người nhận giao việc</label>
+        <select id="assignAssignee" style="width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-family:inherit;margin-top:6px;">
+          <option value="">-- Chọn người nhận --</option>
+        </select>
+      </div>
+
+      <!-- Ghi chú -->
+      <div class="modal-field" style="margin-top:12px">
+        <label style="font-size:12px;font-weight:700;color:#334155;">Ghi chú</label>
+        <textarea id="assignNote" rows="3" style="width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-family:inherit;margin-top:6px;" placeholder="Nội dung giao việc (tuỳ chọn)..."></textarea>
+      </div>
+
+      <button id="assignSendBtn" class="support-submit-btn" style="width:100%;margin-top:14px;">Gửi giao việc</button>
+    </div>
+  </div>
+</div>
+
+<!-- Support Request Modal -->
+<div id="supportModal" class="modal-overlay">
+  <div class="support-modal-content">
+    <div class="support-modal-header">
+      <h3>Tạo yêu cầu hỗ trợ</h3>
+      <button id="closeSupportModal" class="support-modal-close" type="button">×</button>
+    </div>
+    <div class="support-modal-body">
+      <div class="support-form-grid">
+        <div class="support-field">
+          <label>Mã phiếu hỗ trợ</label>
+          <input id="supportCode" class="support-input" type="text" placeholder="Tự động tạo hoặc nhập tùy chỉnh...">
+        </div>
+        <div class="support-field">
+          <label>Loại hỗ trợ</label>
+          <select id="supportType" class="support-select">
+            <option value="Xin thông tin">Xin thông tin</option>
+            <option value="Hỗ trợ gấp">Hỗ trợ gấp</option>
+            <option value="Tư vấn kỹ thuật">Tư vấn kỹ thuật</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+        <div class="support-field">
+          <label>Nơi xử lý</label>
+          <select id="supportLocation" class="support-select">
+            <option value="Kho">Kho</option>
+            <option value="CN45">CN45</option>
+            <option value="CN141">CN141</option>
+          </select>
+        </div>
+        <div class="support-field">
+          <label>Ghi chú</label>
+          <textarea id="supportNote" class="support-textarea" rows="4" placeholder="Nhập nội dung yêu cầu..."></textarea>
+        </div>
+        <button id="sendSupportBtn" class="support-submit-btn">Gửi yêu cầu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+//  GIAO VIỆC (Assign tickets)
+// ================================================================
+const assignState = {
+  selectedKeys: new Set(),     // 'sheetName||maYeuCau'
+  filterKeyword: '',
+  assignees: [],
+  loadedAssignees: false,
+};
+
+document.getElementById('chatBubble').onclick = openAssignModal;
+
+document.getElementById('closeChatModal').onclick = () => {
+  document.getElementById('chatModal').classList.remove('open');
+};
+
+document.getElementById('chatModal').onclick = (e) => {
+  if (e.target.id === 'chatModal') {
+    document.getElementById('chatModal').classList.remove('open');
+  }
+};
+
+document.getElementById('assignSearchInput').oninput = (e) => {
+  assignState.filterKeyword = e.target.value.trim();
+  renderAssignTicketList();
+};
+
+async function openAssignModal() {
+  document.getElementById('chatModal').classList.add('open');
+  document.getElementById('assignSearchInput').value = '';
+  document.getElementById('assignNote').value = '';
+  assignState.selectedKeys.clear();
+  assignState.filterKeyword = '';
+  renderAssignTicketList();
+  if (!assignState.loadedAssignees) {
+    await loadAssignees();
+  }
+}
+
+async function loadAssignees() {
+  try {
+    const list = await apiCall('getAssignees');
+    assignState.assignees = Array.isArray(list) ? list : [];
+    assignState.loadedAssignees = true;
+    const sel = document.getElementById('assignAssignee');
+    sel.innerHTML = '<option value="">-- Chọn người nhận --</option>' +
+      assignState.assignees.map(a =>
+        `<option value="${esc(a.name)}" data-openid="${esc(a.openId || '')}">${esc(a.name)}${a.openId ? '' : ' (chưa có ID)'}</option>`
+      ).join('');
+  } catch (err) {
+    showToast('Lỗi tải người nhận: ' + err.message);
+  }
+}
+
+// Lấy tất cả phiếu chưa hoàn thành (mọi sheet) — sort cũ → mới
+function getUnfinishedTickets() {
+  const all = [];
+  SHEETS.forEach(s => {
+    (allDataCache[s.name] || []).forEach(p => {
+      if (!p.maYeuCau) return;
+      let isDone = false;
+      if (p.sheetName === 'Kho thu cũ' || p.sheetName === 'Kho nhập hàng') {
+        isDone = !!p.hoanThanh;
+      } else if (p.sheetName === 'Kho bảo hành') {
+        isDone = String(p.trangThaiChinh || '').trim().toLowerCase() === 'hoàn thành';
+      } else {
+        // CNTT / CN141
+        const st = String(p.trangThaiChinh || '').trim();
+        isDone = (st === 'Sửa chữa xong' || st === 'Đã trả khách');
+      }
+      if (!isDone) all.push(p);
+    });
+  });
+  // Cũ nhất trước
+  all.sort((a, b) => {
+    const ta = a.thoiGianTao ? new Date(a.thoiGianTao).getTime() : 0;
+    const tb = b.thoiGianTao ? new Date(b.thoiGianTao).getTime() : 0;
+    return ta - tb;
+  });
+  return all;
+}
+
+function renderAssignTicketList() {
+  const wrap = document.getElementById('assignTicketList');
+  let data = getUnfinishedTickets();
+  const q = normalizeKeyword(assignState.filterKeyword);
+  if (q) {
+    data = data.filter(p =>
+      normalizeKeyword(p.maYeuCau).includes(q) ||
+      normalizeKeyword(p.tenHangSuaChua).includes(q) ||
+      normalizeKeyword(p.imei).includes(q)
+    );
+  }
+
+  document.getElementById('assignCount').textContent = '(' + data.length + ')';
+  document.getElementById('assignSelectedCount').textContent = assignState.selectedKeys.size;
+
+  if (!data.length) {
+    wrap.innerHTML = '<div style="padding:18px;text-align:center;color:#64748b;font-size:13px;">Không có phiếu phù hợp</div>';
+    return;
+  }
+
+  // Giới hạn 200 dòng để khỏi nặng DOM
+  const list = data.slice(0, 200);
+  wrap.innerHTML = list.map(p => {
+    const key = p.sheetName + '||' + p.maYeuCau;
+    const checked = assignState.selectedKeys.has(key) ? 'checked' : '';
+    const tg = p.thoiGianTao ? formatDateOnly(p.thoiGianTao) : '';
+    return `
+      <label class="assign-item" style="display:flex;gap:10px;padding:10px 12px;border-bottom:1px solid #e2e8f0;cursor:pointer;align-items:flex-start;background:#fff;">
+        <input type="checkbox" data-key="${esc(key)}" ${checked} onchange="toggleAssignTicket(this)" style="margin-top:3px;flex-shrink:0;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:13px;">${esc(p.maYeuCau)}</div>
+          <div style="font-size:12px;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(p.tenHangSuaChua || '')}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">
+            ${esc(tg)} · ${esc(p.sheetName)}${p.imei ? ' · IMEI: ' + esc(p.imei) : ''}
+          </div>
+        </div>
+      </label>
+    `;
+  }).join('') + (data.length > 200 ? `<div style="padding:8px;text-align:center;color:#64748b;font-size:12px;">Hiển thị 200/${data.length} — gõ vào ô tìm kiếm để lọc</div>` : '');
+}
+
+function toggleAssignTicket(cb) {
+  const key = cb.dataset.key;
+  if (cb.checked) assignState.selectedKeys.add(key);
+  else assignState.selectedKeys.delete(key);
+  document.getElementById('assignSelectedCount').textContent = assignState.selectedKeys.size;
+}
+
+document.getElementById('assignSendBtn').onclick = async () => {
+  if (assignState.selectedKeys.size === 0) {
+    showToast('Vui lòng chọn ít nhất 1 phiếu');
+    return;
+  }
+  const sel = document.getElementById('assignAssignee');
+  const assigneeName = sel.value.trim();
+  if (!assigneeName) {
+    showToast('Vui lòng chọn người nhận');
+    return;
+  }
+  const opt = sel.options[sel.selectedIndex];
+  const assigneeOpenId = opt ? (opt.dataset.openid || '') : '';
+  const note = document.getElementById('assignNote').value.trim();
+
+  // Build danh sách phiếu chỉ chứa 3 trường cần
+  const tickets = [];
+  assignState.selectedKeys.forEach(key => {
+    const [sheetName, maYeuCau] = key.split('||');
+    const p = (allDataCache[sheetName] || []).find(x => x.maYeuCau === maYeuCau);
+    if (!p) return;
+    tickets.push({
+      maYeuCau: p.maYeuCau,
+      imei: p.imei || '',
+      tenHangSuaChua: p.tenHangSuaChua || '',
+    });
+  });
+
+  const btn = document.getElementById('assignSendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi...';
+
+  try {
+    await apiPost('assignTickets', { tickets, assigneeName, assigneeOpenId, note });
+    showToast('Đã gửi giao việc lên Lark!');
+    assignState.selectedKeys.clear();
+    document.getElementById('assignNote').value = '';
+    document.getElementById('chatModal').classList.remove('open');
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Gửi giao việc';
+  }
+};
+
+// Support Request Modal
+let currentTicketForSupport = null;
+
+function openRequestModal(maYeuCau, sheetName) {
+  currentTicketForSupport = { maYeuCau, sheetName };
+  document.getElementById('supportCode').value = 'SUP' + Date.now();
+  renderSupportLocationOptions();
+  document.getElementById('supportModal').classList.add('open');
+}
+
+document.getElementById('closeSupportModal').onclick = () => {
+  document.getElementById('supportModal').classList.remove('open');
+};
+
+document.getElementById('supportModal').onclick = (e) => {
+  if (e.target.id === 'supportModal') {
+    document.getElementById('supportModal').classList.remove('open');
+  }
+};
+
+document.getElementById('sendSupportBtn').onclick = async () => {
+  const code = document.getElementById('supportCode').value.trim();
+  const type = document.getElementById('supportType').value;
+  const location = document.getElementById('supportLocation').value;
+  const note = document.getElementById('supportNote').value.trim();
+
+  if (!code || !note) {
+    showToast('Vui lòng nhập đủ thông tin');
+    return;
+  }
+
+  try {
+    await apiPost('createSupportRequest', {
+      maPhieu: code,
+      loaiHoTro: type,
+      noiXuLy: location,
+      ghiChu: note,
+      maYeuCau: currentTicketForSupport.maYeuCau,
+      sheetName: currentTicketForSupport.sheetName
+    });
+
+    showToast('Đã gửi yêu cầu hỗ trợ!');
+    document.getElementById('supportNote').value = '';
+    document.getElementById('supportModal').classList.remove('open');
+  } catch (err) {
+    showToast('Lỗi: ' + err.message);
+  }
+};
+</script>
+
 </body>
 </html>
